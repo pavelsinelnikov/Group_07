@@ -9,5 +9,9 @@ dist/
 npm-debug.log
 yarn-error.log
 
+
+# API Keys
+.env
+
 # End of https://www.gitignore.io/api/vuejs
 
