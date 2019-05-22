@@ -2,7 +2,18 @@
   <div>
     <form @submit.prevent>
       <!--TODO: Add search terms -->
-      <input v-model="localmsg" /><button @click="fetchDataFromNewsAPI()">
+      <input v-model="localmsg" />
+      <select v-model="selectedCountry">
+        <option disabled value="">Select a country...</option>
+        <option
+          v-for="country in countries"
+          :key="country.id"
+          :value="country.code"
+        >
+          {{ country.name }}
+        </option>
+      </select>
+      <button @click="fetchDataFromNewsAPI()">
         Send
       </button>
     </form>
@@ -21,16 +32,29 @@ export default {
     return {
       localmsg: '',
       newsIndex: 0,
+      selectedCountry: '',
       newsResponse: [],
+      countries: [
+        {id: 1, name: 'United Arab Emirates', code: 'ae'},
+        {id: 2, name: 'Argentina', code: 'ar'},
+        {id: 3, name: 'Austria', code: 'at'},
+      ],
     };
   },
   methods: {
     fetchDataFromNewsAPI() {
+      // Empty an array
+      this.newsResponse.length = 0;
+      this.newsIndex = 0;
       // Will only retrieve preset data
       var url =
-        'https://newsapi.org/v2/everything?' +
-        'q=Apple&' +
-        'from=2019-05-22&' +
+        'https://newsapi.org/v2/top-headlines?' +
+        'q=' +
+        this.localmsg +
+        '&' +
+        'country=' +
+        this.selectedCountry +
+        '&' +
         'sortBy=popularity&' +
         // API Key will be given in a separate file not included in git
         // I would suggest making your own one for now
@@ -54,3 +78,9 @@ export default {
   },
 };
 </script>
+
+<style>
+ul {
+  list-style-type: none;
+}
+</style>
