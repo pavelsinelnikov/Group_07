@@ -16,9 +16,9 @@
 
 ## Business Description
 
-The internet is a place where you are able to search for anything. When it comes to news media, one problem that occurs is that you are unable to get a variety of news articles from different sources that focus on a certain location that may be of interest to you. Most news articles and their sources are often localized based on your location. However, when breaking news occurs on the other side of the world, many local news sources fail to cover these stories.  Even if you turn your location off, the news articles present are often from major news sources that do not represent how news sources from other countries perceive an issue. There is no effective means of retreiving news information worldwide.  
+The internet is a place where you are able to search for anything. When it comes to news media, one problem that occurs is that you are unable to get a variety of news articles from different sources that focus on a certain location that may be of interest to you. Most news articles and their sources are often localized based on your location. However, when breaking news occurs on the other side of the world, many local news sources fail to cover these stories. Even if you turn your location off, the news articles present are often from major news sources that do not represent how news sources from other countries perceive an issue. There is no effective means of retreiving news information worldwide.
 
-Our solution is simple.  By using an API or a set of tools for building softwre, the **Google Maps Javascript API** lets you customize maps with your own content and imagery for display on web pages and mobile devices. Then, our website will retrieve news information **from a specific country** using **newsapi.org**, which provides live news updates. The user can also apply specific filters such as sports, technology, politics and more on the news search to narrow down the information they are interested in.  Additional filters may be added in the future.  News articles, by default, will be sorted by newest first.  The user has the option to sort by popularity or by oldest first.
+Our solution is simple. By using an API or a set of tools for building softwre, the **Google Maps Javascript API** lets you customize maps with your own content and imagery for display on web pages and mobile devices. Then, our website will retrieve news information **from a specific country** using **newsapi.org**, which provides live news updates. The user can also apply specific filters such as sports, technology, politics and more on the news search to narrow down the information they are interested in. Additional filters may be added in the future. News articles, by default, will be sorted by newest first. The user has the option to sort by popularity or by oldest first.
 
 ## Use Cases
 
@@ -30,15 +30,15 @@ This use case describes the process of a user opening the website and filtering 
 
 #### Actors
 
-User (anyone with access to the webstie)
+User (anyone with access to the website)
 
-#### Preconditions 
+#### Preconditions
 
 The user has the website open.
 
 #### Basic Flow
 
-The user clicks the dropdown menu to filter news articles.  The user then reads through a list of topics to chose from and clicks on his/her desired topic.  The news articles are then displayed according to the chosen topic.
+The user clicks the dropdown menu to filter news articles. The user then reads through a list of topics to chose from and clicks on his/her desired topic. The news articles are then displayed according to the chosen topic.
 
 #### Alternate and/or exception flows
 
@@ -47,3 +47,29 @@ The user can also select a location to filter. Then, the news articles will be d
 #### Post-conditions
 
 The desired filter is applied to the news articles.
+
+### User picks location
+
+#### Brief description
+
+This use case describes the process of the user picking a location which then provides them with the relevant articles from that location.
+
+#### Actors
+
+Users (anyone with access to the website).
+
+#### Preconditions
+
+The user has the website open and is on the main world map page.
+
+#### Basic Flow
+
+The user searches and clicks on a country on the world map. This will reload the page and provide a list of relevant news articles.
+
+#### Alternate and/or exception flows
+
+In the case of the country having no news results, an error message will be displayed indicating that there is no news of that country and the user is prompted to choose another one on the map.
+
+#### Post-conditions
+
+A list of news articles are displayed.
