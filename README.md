@@ -64,7 +64,7 @@ The user has the website open and is on the main world map page.
 
 #### Basic Flow
 
-The user clicks on a country on the world map. The click requests the name of the selected country from the Google Maps API and returns the name of the selected country. After the selected country name is received, the website then converts the country name according to the ISO 3166-1 specification. This information is then sent to the NewsAPI. The NewsAPI will return the relevant news articles from the selected country. The list then would be sorted by title and also with the preexisting filters that the user has put in place.
+The user clicks on a country on the world map. The click requests the name of the selected country from the Google Maps API and returns the name of the selected country. After the selected country name is received, the website then converts the country name according to the ISO 3166-1 specification. This information is then sent to the NewsAPI. The NewsAPI will return the relevant news articles from the selected country. The results would then would be sorted by title and with the preexisting filters that the user has put in place (if any were provided).
 
 #### Alternate and/or exception flows
 
