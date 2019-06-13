@@ -73,3 +73,26 @@ In the case of the country having no news results, an error message will be disp
 #### Post-conditions
 
 A list of news articles are displayed.
+
+## Technological Choices
+
+### Front-End Technologies
+
+Front-end technologies will include:
+
+- Vue
+- Bootstrap
+
+### Back-End Technologies
+
+Back-end technologies will include:
+
+- Node.js
+- Heroku (with upgradable hosting options in the future)
+
+### Application Programming Interfaces (APIs)
+
+API's will include:
+
+- Google Maps API
+- Newsapi.org API
