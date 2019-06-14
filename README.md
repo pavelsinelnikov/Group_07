@@ -38,11 +38,11 @@ The user has the website open.
 
 #### Basic Flow
 
-The user clicks the dropdown menu to filter news articles. The user then reads through a list of topics to chose from and clicks on his/her desired topic. The news articles are then displayed according to the chosen topic.
+The user clicks the dropdown menu to filter the news articles. The user then reads through a list of topics to chose from and clickks on his/her desired topic.  Once a click request is made, NewsAPI will return news articles according to the chosen topic.
 
 #### Alternate and/or exception flows
 
-The user can also select a location to filter. Then, the news articles will be displayed according to the location and filter selected.
+The user selects a location folowing the User picks location use case and then chosees to filter the news articles. Then, the news articles will be displayed according to the location and filter selected.
 
 #### Post-conditions
 
