@@ -81,18 +81,39 @@ A list of news articles are displayed.
 Front-end technologies will include:
 
 - Vue
+
+  Vue would be used as a Javascript framework. This will allow insertion of HTML, Javascript, and CSS styling to individual components. This will allow for a simple and expandable application to take place from the individual components.
+
 - Bootstrap
+
+  Bootstrap is used to properly align elements in the page and to adjust how objects are displayed depending on the page size.
 
 ### Back-End Technologies
 
 Back-end technologies will include:
 
 - Node.js
+
+  Node.js is a backend technology that allows for the Vue.js application to be hosted.
+
 - Heroku (with upgradable hosting options in the future)
+
+  Heroku allows for a basic site hosting to run the node server and accessible from anywhere. If database technologies are needed in the future (such as registering users). Heroku has options for multiple database hosting such as PostgresSQL, mySQL, and MongoDB. Although the plan has restrictions on the RAM available and the database storage capacity. More cloud storage options would be an option if the amount of users to the website increase in the future.
 
 ### Application Programming Interfaces (APIs)
 
 API's will include:
 
 - Google Maps API
+
+  The Google Maps API will provide user accessibility to a global map. This will allow the user to interact with the map and retrieve country information that is sent to NewsAPI.
+
 - Newsapi.org API
+
+  The NewsAPI will retrieve news article information depending on the search criteria. Some common filters for search criteria are:
+
+  - Categories
+  - Countries
+  - Article names
+
+  The "Countries" search criteria is derived from the Maps interaction by the user. Each time the user clicks on a country on the map a request gets sent to the NewsAPI and news articles are retrieved depending on the search criteria.
