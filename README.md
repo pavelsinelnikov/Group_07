@@ -14,6 +14,12 @@
 - Skype: andrew54941
 - Role: Developer
 
+### Geoff McCollam
+
+- Github: GeoffMcCollam
+- Skype: geoffmccollam_1
+- Role: Developer
+
 ## Business Description
 
 The internet is a place where you are able to search for anything. When it comes to news media, one problem that occurs is that you are unable to get a variety of news articles from different sources that focus on a certain location that may be of interest to you. Most news articles and their sources are often localized based on your location. However, when breaking news occurs on the other side of the world, many local news sources fail to cover these stories. Even if you turn your location off, the news articles present are often from major news sources that do not represent how news sources from other countries perceive an issue. There is no effective means of retrieving news information worldwide.
