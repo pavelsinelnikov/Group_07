@@ -38,8 +38,12 @@ Our prototype will include:
 
 ## To Do List for Iteration 1
 
-- Create Vue.js project
-- Integrate Google Maps API into the project
+- ~~Create Vue.js project~~
+- ~~Integrate Google Maps API into the project~~
+- Integrate Google Maps API with the NewsAPI:
+  - Clicking on the map and data gets sent to NewsAPI
+  - NewsAPI returns data with relevant news articles
+- Styling the page
 
 ## Use Cases
 
