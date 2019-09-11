@@ -36,14 +36,20 @@ Our prototype will include:
 - Filtering options
 - Easy to navigate interface
 
-## To Do List for Iteration 1
+## To Do List
 
-- ~~Create Vue.js project~~
-- ~~Integrate Google Maps API into the project~~
-- Integrate Google Maps API with the NewsAPI:
-  - Clicking on the map and data gets sent to NewsAPI
-  - NewsAPI returns data with relevant news articles
-- Styling the page
+- Create Vue.js project
+- Create interface for each page
+- Integrate Google Maps API into the project
+- User picks location usecase
+ - swimlanes/class diagram/UI
+ - display interactable map
+ - read user input on the interactable map
+- Integrate news API into the project
+- User filter selection use case
+  - swimlanes/class diagrams/UI
+  - create filter form
+  - display article
 
 ## Use Cases
 
