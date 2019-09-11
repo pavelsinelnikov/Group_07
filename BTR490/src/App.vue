@@ -1,18 +1,21 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
+    <Map></Map>
     <NewsScreen></NewsScreen>
   </div>
 </template>
 
 <script>
 import NewsScreen from './components/NewsScreen.vue';
+import Map from './components/Map.vue';
 
 export default {
   name: 'app',
   components: {
     NewsScreen,
-  },
+    Map
+  }
 };
 </script>
 
