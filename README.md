@@ -18,28 +18,28 @@ Our prototype will include:
 
 ## To Do List
 
-<<<<<<< HEAD
 - ~~Create Vue.js project~~
 - ~~Integrate Google Maps API into the project~~
 - Integrate Google Maps API with the NewsAPI:
   - Clicking on the map and data gets sent to NewsAPI
   - NewsAPI returns data with relevant news articles
 - Styling the page
-=======
-- Create Vue.js project
 - Create interface for each page
-- Integrate Google Maps API into the project
 - User picks location usecase
- - swimlanes/class diagram/UI
- - display interactable map
- - read user input on the interactable map
+  - Swimlanes/class diagram/UI
+  - Display interactable map
+  - Read user input on the interactable map
 - Integrate news API into the project
 - User filter selection use case
-  - swimlanes/class diagrams/UI
-  - create filter form
-  - display article
->>>>>>> 44eb3a73683a8da6abdd4ce0ce9066d40a88a0f3
+  - Swimlanes/class diagrams/UI
+  - Create filter form
+  - Display article
+- User authentication use case
+  - Swimlanes/class diagrams/UI
+  - Database to store the user authentication
 
 ## Iteration 1 To Do List
 
--
+- Integrate Google Maps API with the NewsAPI:
+  - Clicking on the map and data gets sent to NewsAPI
+  - NewsAPI returns data with relevant news articles

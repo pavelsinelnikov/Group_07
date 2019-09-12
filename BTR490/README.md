@@ -80,6 +80,10 @@ In the case of the country having no news results, an error message will be disp
 
 A list of news articles are displayed.
 
+### User Account Authentication
+
+// TODO: Insert use case description here
+
 ## Technological Choices
 
 ### Front-End Technologies
