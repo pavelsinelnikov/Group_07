@@ -40,6 +40,11 @@ Our prototype will include:
 
 ## Iteration 1 To Do List
 
+- Write guide on how to set up the server
 - Integrate Google Maps API with the NewsAPI:
   - Clicking on the map and data gets sent to NewsAPI
   - NewsAPI returns data with relevant news articles
+- User picks location usecase
+  - Swimlanes/class diagram/UI
+  - Display interactable map
+  - Read user input on the interactable map
