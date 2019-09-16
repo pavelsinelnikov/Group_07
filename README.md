@@ -48,3 +48,6 @@ Our prototype will include:
   - Swimlanes/class diagram/UI
   - Display interactable map
   - Read user input on the interactable map
+- Styling the page
+- Create interface for each page
+
