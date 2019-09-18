@@ -1,6 +1,13 @@
 import Vue from 'vue';
-import App from './App.vue';
+import Home from './App.vue';
+import NotFound from './pages/NotFound.vue';
+import About from './pages/About.vue';
 import * as VueGoogleMaps from 'vue2-google-maps';
+
+const routes = {
+  '/': Home,
+  '/about': About
+};
 
 Vue.use(VueGoogleMaps, {
   load: {
@@ -16,5 +23,15 @@ Vue.use(VueGoogleMaps, {
 Vue.config.productionTip = false;
 
 new Vue({
-  render: h => h(App)
+  data: {
+    currentRoute: window.location.pathname
+  },
+  computed: {
+    ViewComponent() {
+      return routes[this.currentRoute] || NotFound;
+    }
+  },
+  render(h) {
+    return h(this.ViewComponent);
+  }
 }).$mount('#app');
