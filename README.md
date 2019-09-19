@@ -25,18 +25,22 @@ Our prototype will include:
   - NewsAPI returns data with relevant news articles
 - Styling the page
 - Create interface for each page
-- User picks location usecase
-  - Swimlanes/class diagram/UI
-  - Display interactable map
-  - Read user input on the interactable map
+- ~~User picks location diagrams~~
+  - ~~Use Case~~
+  - ~~Activity~~
+  - ~~Domain Model (class)~~
 - Integrate news API into the project
-- User filter selection use case
-  - Swimlanes/class diagrams/UI
-  - Create filter form
-  - Display article
-- User authentication use case
-  - Swimlanes/class diagrams/UI
-  - Database to store the user authentication
+- User filter selection diagrams
+  - Use Case
+  - Activity
+- User authentication diagrams
+  - Use Case
+  - Activity
+  - Domain Model (class)
+  - Entity Relationship
+- Implement Location Pick
+- Implement Filter
+- Implement Authentication
 
 ## Iteration 1 To Do List
 
@@ -44,10 +48,9 @@ Our prototype will include:
 - Integrate Google Maps API with the NewsAPI:
   - Clicking on the map and data gets sent to NewsAPI
   - NewsAPI returns data with relevant news articles
-- User picks location usecase
-  - Swimlanes/class diagram/UI
-  - Display interactable map
-  - Read user input on the interactable map
+- ~~User picks location diagrams~~
+  - ~~Use Case~~
+  - ~~Activity~~
+  - ~~Domain Model (class)~~
 - Styling the page
 - Create interface for each page
-
