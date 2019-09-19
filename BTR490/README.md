@@ -80,9 +80,57 @@ In the case of the country having no news results, an error message will be disp
 
 A list of news articles are displayed.
 
+### User Account Creation
+
+#### Brief description
+
+A user account is created
+
+#### Actors
+
+User
+
+#### Preconditions
+
+None
+
+#### Basic Flow
+
+//Insert Flow
+
+#### Alternate and/or exception flows
+
+//Insert Exception flow
+
+#### Post-conditions
+
+User Account is created
+
 ### User Account Authentication
 
-// TODO: Insert use case description here
+#### Brief description
+
+The user logs into their account
+
+#### Actors
+
+User
+
+#### Preconditions
+
+User must have an account created
+
+#### Basic Flow
+
+//Insert Flow
+
+#### Alternate and/or exception flows
+
+//Insert Exception flow
+
+#### Post-conditions1
+
+User is Authenticated
 
 ## Technological Choices
 

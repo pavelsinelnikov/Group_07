@@ -33,13 +33,14 @@ Our prototype will include:
 - User filter selection diagrams
   - Use Case
   - Activity
-- User authentication diagrams
+- User creation/authentication diagrams
   - Use Case
   - Activity
   - Domain Model (class)
   - Entity Relationship
 - Implement Location Pick
 - Implement Filter
+- Implement User Account Creation
 - Implement Authentication
 
 ## Iteration 1 To Do List
