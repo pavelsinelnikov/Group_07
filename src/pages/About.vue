@@ -1,18 +1,22 @@
 <template>
   <div id="about">
-    <img alt="Vue logo" src="./../assets/logo.png" />
-    <p>About Page</p>
+    <OtherMap></OtherMap>
   </div>
 </template>
 
 <script>
+import OtherMap from './../components/OtherMap.vue';
+
 export default {
-  name: 'about'
+  name: 'about',
+  components: {
+    OtherMap
+  }
 };
 </script>
 
 <style>
-#about {
+#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

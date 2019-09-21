@@ -13,7 +13,7 @@ Vue.use(VueGoogleMaps, {
   load: {
     // API Key will be given in a separate file not included in git
     // I would suggest making your own one for now
-    key: `${process.env.VUE_APP_GOOGLE_API}`,
+    //key: `${process.env.VUE_APP_GOOGLE_API}`,
     libraries: 'places'
   },
 
