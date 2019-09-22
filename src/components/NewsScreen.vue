@@ -71,9 +71,8 @@ export default {
       this.hasSelected = true;
       this.newsIndex = 0;
       // Empty an array
-      while (this.newsResponse.length) {
-        this.newsResponse.pop();
-      }
+      this.newsResponse = [];
+
       // Will only retrieve preset data
       var url =
         'https://newsapi.org/v2/top-headlines?' +
