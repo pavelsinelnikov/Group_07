@@ -20,16 +20,16 @@ Our prototype will include:
 
 - ~~Create Vue.js project~~
 - ~~Integrate Google Maps API into the project~~
-- Integrate Google Maps API with the NewsAPI:
-  - Clicking on the map and data gets sent to NewsAPI
-  - NewsAPI returns data with relevant news articles
+- ~~Integrate Google Maps API with the NewsAPI:~~
+  - ~~Clicking on the map and data gets sent to NewsAPI~~
+  - ~~NewsAPI returns data with relevant news articles~~
 - Styling the page
 - Create interface for each page
 - ~~User picks location diagrams~~
   - ~~Use Case~~
   - ~~Activity~~
   - ~~Domain Model (class)~~
-- Integrate news API into the project
+- ~~Integrate news API into the project~~
 - User filter selection diagrams
   - Use Case
   - Activity
@@ -38,17 +38,17 @@ Our prototype will include:
   - Activity
   - Domain Model (class)
   - Entity Relationship
-- Implement Location Pick
+- ~~Implement Location Pick~~
 - Implement Filter
 - Implement User Account Creation
 - Implement Authentication
 
 ## Iteration 1 To Do List
 
-- Write guide on how to set up the server
-- Integrate Google Maps API with the NewsAPI:
-  - Clicking on the map and data gets sent to NewsAPI
-  - NewsAPI returns data with relevant news articles
+- ~~Write guide on how to set up the server~~
+- ~~Integrate Google Maps API with the NewsAPI:~~
+  - ~~Clicking on the map and data gets sent to NewsAPI~~
+  - ~~NewsAPI returns data with relevant news articles~~
 - ~~User picks location diagrams~~
   - ~~Use Case~~
   - ~~Activity~~

@@ -25,8 +25,8 @@ export default {
       map: null,
       marker: {
         position: {
-          lat: 0,
-          lng: 0
+          lat: 56.1303673,
+          lng: -106.3467712
         }
       },
       geocoder: null
@@ -36,14 +36,20 @@ export default {
     google: gmapApi
   },
   mounted() {
-    this.geocoder = new this.google.maps.Geocoder();
     var that = this;
-    this.$refs.mapRef.$mapPromise.then(map => {
-      map.addListener('click', function(e) {
-        that.marker.position = e.latLng;
-        map.panTo(e.latLng);
-        that.geocoder.geocode({ latLng: e.latLng }, function(results, status) {
-          console.log(results[results.length - 1].formatted_address);
+    that.$gmapApiPromiseLazy().then(() => {
+      that.geocoder = new this.google.maps.Geocoder();
+      that.$refs.mapRef.$mapPromise.then(map => {
+        that.$emit('country-selected', 'Canada');
+        map.addListener('click', function(e) {
+          that.marker.position = e.latLng;
+          map.panTo(e.latLng);
+          that.geocoder.geocode({ latLng: e.latLng }, function(results) {
+            that.$emit(
+              'country-selected',
+              results[results.length - 1].formatted_address
+            );
+          });
         });
       });
     });

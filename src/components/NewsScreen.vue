@@ -2,8 +2,9 @@
   <div>
     <form @submit.prevent>
       <!--TODO: Add search terms -->
-      <input v-model="localmsg" />
-      <select v-model="selectedCountry">
+      <p>Selected country: {{ country }}</p>
+      <input v-model="localmsg" placeholder="Enter Filter Criteria" />
+      <!-- <select v-model="selectedCountry">
         <option disabled value>Select a country...</option>
         <option
           v-for="country in countries"
@@ -11,38 +12,68 @@
           :value="country.code"
           >{{ country.name }}</option
         >
-      </select>
-      <button @click="fetchDataFromNewsAPI()">Send</button>
+      </select> -->
+      <button @click="fetchDataFromNewsAPI()">Search</button>
     </form>
-    <ul>
-      <li v-for="response in newsResponse" :key="response.id">
-        {{ response.result.title }}
-        <button @click="deleteMessage(response.id)">X</button>
-      </li>
-    </ul>
+    <div v-if="loadingStatus">
+      <p>Loading...</p>
+    </div>
+    <div v-else-if="newsIndex > 0">
+      <ul>
+        <li v-for="response in newsResponse" :key="response.id">
+          <a :href="response.result.url">{{ response.result.title }}</a>
+          <!-- <button @click="deleteMessage(response.id)">X</button> -->
+        </li>
+      </ul>
+    </div>
+    <div v-else-if="hasSelected">
+      <p>
+        Sorry, no news for {{ searchedLocation }}, please select another
+        location
+      </p>
+    </div>
+    <div v-else>
+      <p>
+        Press Search!
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
+const { getCode } = require('country-list');
+
 export default {
-  data: function() {
+  props: ['country'],
+  data() {
     return {
       localmsg: '',
       newsIndex: 0,
-      selectedCountry: '',
+      hasSelected: false,
       newsResponse: [],
-      countries: [
-        { id: 1, name: 'United Arab Emirates', code: 'ae' },
-        { id: 2, name: 'Argentina', code: 'ar' },
-        { id: 3, name: 'Austria', code: 'at' }
-      ]
+      searchedLocation: '',
+      loadingStatus: false
+      // countries: [
+      //   { id: 1, name: 'United Arab Emirates', code: 'ae' },
+      //   { id: 2, name: 'Argentina', code: 'ar' },
+      //   { id: 3, name: 'Austria', code: 'at' }
+      // ]
     };
+  },
+  computed: {
+    compCountry() {
+      return getCode(this.country);
+    }
   },
   methods: {
     fetchDataFromNewsAPI() {
-      // Empty an array
-      this.newsResponse.length = 0;
+      this.loadingStatus = true;
+      this.hasSelected = true;
       this.newsIndex = 0;
+      // Empty an array
+      while (this.newsResponse.length) {
+        this.newsResponse.pop();
+      }
       // Will only retrieve preset data
       var url =
         'https://newsapi.org/v2/top-headlines?' +
@@ -50,7 +81,7 @@ export default {
         this.localmsg +
         '&' +
         'country=' +
-        this.selectedCountry +
+        this.compCountry +
         '&' +
         'sortBy=popularity&' +
         // API Key will be given in a separate file not included in git
@@ -61,12 +92,14 @@ export default {
       fetch(url)
         .then(response => response.json())
         .then(data => {
+          this.loadingStatus = false;
           let value = data.articles;
           value.map(result => {
             // TODO: Change id field to something better rather than a count
             this.newsResponse.push({ id: this.newsIndex++, result: result });
           });
         });
+      this.searchedLocation = this.country;
     },
     deleteMessage(respId) {
       let index = this.newsResponse.findIndex(x => x.id == respId);

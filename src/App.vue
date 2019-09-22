@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <Map></Map>
-    <NewsScreen></NewsScreen>
+    <Map @country-selected="setCountry"></Map>
+    <NewsScreen :country="country"></NewsScreen>
   </div>
 </template>
 
@@ -11,9 +11,19 @@ import Map from './components/Map.vue';
 
 export default {
   name: 'app',
+  data() {
+    return {
+      country: ''
+    };
+  },
   components: {
     NewsScreen,
     Map
+  },
+  methods: {
+    setCountry(country) {
+      this.country = country;
+    }
   }
 };
 </script>
