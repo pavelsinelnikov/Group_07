@@ -8,6 +8,10 @@
 
 ![](./Images/activity_diagram.jpg)
 
+## Swimlane Diagram
+
+![](./Images/swimlane.jpg)
+
 ## Domain Model
 
-![](./Images/map_news_class.jpg)
+![](./Images/class.jpg)
