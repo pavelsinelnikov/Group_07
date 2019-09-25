@@ -1,31 +1,20 @@
 <template>
   <div id="app">
-    <Map @country-selected="setCountry"></Map>
-    <NewsScreen :country="country"></NewsScreen>
+        <Navbar></Navbar>
+
+    <img src="./assets/logo.png">
+    <router-view/>
   </div>
 </template>
 
 <script>
-import NewsScreen from './components/NewsScreen.vue';
-import Map from './components/Map.vue';
-
+import Navbar from './components/Navbar.vue'
 export default {
   name: 'app',
-  data() {
-    return {
-      country: ''
-    };
-  },
   components: {
-    NewsScreen,
-    Map
-  },
-  methods: {
-    setCountry(country) {
-      this.country = country;
-    }
+    Navbar
   }
-};
+}
 </script>
 
 <style>

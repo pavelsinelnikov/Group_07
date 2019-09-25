@@ -1,11 +1,12 @@
 import Vue from 'vue';
 import Home from './App.vue';
 import NotFound from './pages/NotFound.vue';
+import Contact from './pages/Contact.vue';
 //import About from './pages/About.vue';
 import * as VueGoogleMaps from 'vue2-google-maps';
-
+import router from './router';
 const routes = {
-  //'/about': About,
+  '/contact': Contact,
   '/': Home
 };
 
@@ -23,6 +24,7 @@ Vue.use(VueGoogleMaps, {
 Vue.config.productionTip = false;
 
 new Vue({
+  router,
   data: {
     currentRoute: window.location.pathname
   },
