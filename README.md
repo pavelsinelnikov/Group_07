@@ -23,8 +23,8 @@ Our prototype will include:
 - ~~Integrate Google Maps API with the NewsAPI:~~
   - ~~Clicking on the map and data gets sent to NewsAPI~~
   - ~~NewsAPI returns data with relevant news articles~~
-- Styling the page
-- Create interface for each page
+-  ~~Styling the page ~~
+-  ~~Create interface for each page ~~
 - ~~User picks location diagrams~~
   - ~~Use Case~~
   - ~~Activity~~
