@@ -16,34 +16,31 @@
       <button @click="fetchDataFromNewsAPI()">Search</button>
     </form>
 
-
-
-
-    
     <div v-if="loadingStatus">
       <p>Loading...</p>
     </div>
     <div v-else-if="newsIndex > 0">
       <ul>
         <div class="row">
-        <li v-for="response in newsResponse" :key="response.id">
-        <div class="col-sm-6">
-          <b-card
-            title=" "
-            img-src="http://nasalies.org/wp-content/uploads/2018/09/breaking-news-logo.png"
-            img-alt="Image"
-            img-top
-            tag="article"
-            style="max-width: 30rem;"
-            class="mb-2"
-          >
-            <b-card-text>
-              {{ response.result.title }}
-            </b-card-text>
-            <b-button a :href="response.result.url" variant="primary">See more</b-button>
-          </b-card>
-        </div>
-        </li>
+          <li v-for="response in newsResponse" :key="response.id">
+            <div class="col-sm-10">
+              <b-card
+                title=" "
+                img-top
+                tag="article"
+                style="max-width: 20rem;
+                        min-width: 20rem;"
+                class="mb-4"
+              >
+                <b-card-text>
+                  {{ response.result.title }}
+                </b-card-text>
+                <b-button a :href="response.result.url" variant="primary"
+                  >See more</b-button
+                >
+              </b-card>
+            </div>
+          </li>
         </div>
       </ul>
     </div>
