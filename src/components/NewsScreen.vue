@@ -15,15 +15,36 @@
       </select> -->
       <button @click="fetchDataFromNewsAPI()">Search</button>
     </form>
+
+
+
+
+    
     <div v-if="loadingStatus">
       <p>Loading...</p>
     </div>
     <div v-else-if="newsIndex > 0">
       <ul>
+        <div class="row">
         <li v-for="response in newsResponse" :key="response.id">
-          <a :href="response.result.url">{{ response.result.title }}</a>
-          <!-- <button @click="deleteMessage(response.id)">X</button> -->
+        <div class="col-sm-6">
+          <b-card
+            title=" "
+            img-src="http://nasalies.org/wp-content/uploads/2018/09/breaking-news-logo.png"
+            img-alt="Image"
+            img-top
+            tag="article"
+            style="max-width: 30rem;"
+            class="mb-2"
+          >
+            <b-card-text>
+              {{ response.result.title }}
+            </b-card-text>
+            <b-button a :href="response.result.url" variant="primary">See more</b-button>
+          </b-card>
+        </div>
         </li>
+        </div>
       </ul>
     </div>
     <div v-else-if="hasSelected">
