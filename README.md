@@ -23,25 +23,37 @@ Our prototype will include:
 - ~~Integrate Google Maps API with the NewsAPI:~~
   - ~~Clicking on the map and data gets sent to NewsAPI~~
   - ~~NewsAPI returns data with relevant news articles~~
--  ~~Styling the page ~~
--  ~~Create interface for each page ~~
+- ~~Styling the page~~
+- ~~Create interface for each page~~
 - ~~User picks location diagrams~~
   - ~~Use Case~~
   - ~~Activity~~
   - ~~Domain Model (class)~~
 - ~~Integrate news API into the project~~
-- User filter selection diagrams
+- User Filter Selection Diagrams
   - Use Case
   - Activity
-- User creation/authentication diagrams
+- User Creation/Authentication Diagrams
   - Use Case
   - Activity
   - Domain Model (class)
   - Entity Relationship
+- Site View Diagrams
+  - Use Case
+  - Activity
+  - Domain Model (class)
+- Favoriting Article Diagrams
+  - Use Case
+  - Activity
+  - Domain Model (class)
 - ~~Implement Location Pick~~
 - Implement Filter
+  - Search
+  - Category
 - Implement User Account Creation
 - Implement Authentication
+- Implement Site View
+- Favoriting Article Implementation
 
 ## Iteration 1 To Do List
 
@@ -53,5 +65,37 @@ Our prototype will include:
   - ~~Use Case~~
   - ~~Activity~~
   - ~~Domain Model (class)~~
-- Styling the page
-- Create interface for each page
+- ~~Styling the page~~
+- ~~Create interface for each page~~
+
+## Iteration 2 To Do List
+
+- Site View Diagrams
+  - Use Case
+  - Activity
+  - Domain Model (class)
+- Implement site view
+- User Filter Selection Diagrams
+  - Use Case
+  - Activity
+- Implement Filter
+  - Search
+  - Category
+- User Creation/Authentication Diagrams
+  - Use Case
+  - Activity
+  - Domain Model (class)
+  - Entity Relationship
+
+## Iteration 3 To Do List
+
+- Implement User Account Creation
+- Implement Authentication
+
+## Iteration 4 To Do List
+
+- Favoriting Article Diagrams
+  - Use Case
+  - Activity
+  - Domain Model (class)
+- Favoriting Article Implementation
