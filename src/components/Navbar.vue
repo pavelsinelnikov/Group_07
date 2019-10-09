@@ -9,19 +9,19 @@
           <!-- SEARCH BAR IS NOT YET WORKING -->
           <b-navbar-nav class="ml-auto">
             <b-nav-form>
-              <b-form-input
+              <!-- <b-form-input
                 size="sm"
                 class="mr-sm-2"
                 placeholder="WORK IN PROG"
                 v-model="country"
-              ></b-form-input>
-              <b-button
+              ></b-form-input> -->
+              <!-- <b-button
                 size="sm"
                 class="my-2 my-sm-0"
                 type="submit"
                 @click="fetchDataFromNewsAPI()"
                 >Search</b-button
-              >
+              > -->
             </b-nav-form>
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->

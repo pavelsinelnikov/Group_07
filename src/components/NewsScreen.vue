@@ -13,7 +13,7 @@
           >{{ country.name }}</option
         >
       </select> -->
-      <button @click="fetchDataFromNewsAPI()">Search</button>
+      <!-- <button @click="">Search</button> -->
     </form>
 
     <div v-if="loadingStatus">
@@ -78,6 +78,11 @@ export default {
   computed: {
     compCountry() {
       return getCode(this.country);
+    }
+  },
+  watch: {
+    country() {
+      this.fetchDataFromNewsAPI();
     }
   },
   methods: {
