@@ -45,6 +45,7 @@ export default {
           that.marker.position = e.latLng;
           map.panTo(e.latLng);
           that.geocoder.geocode({ latLng: e.latLng }, function(results) {
+            that.$emit('url-emitted', '');
             that.$emit(
               'country-selected',
               results[results.length - 1].formatted_address

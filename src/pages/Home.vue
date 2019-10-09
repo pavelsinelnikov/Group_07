@@ -1,29 +1,36 @@
 <template>
   <div>
     <h2>Home</h2>
-    <Map @country-selected="setCountry"></Map>
-    <NewsScreen :country="country"></NewsScreen>
+    <Map @country-selected="setCountry" @url-emitted="setLink"></Map>
+    <NewsScreen :country="country" @url-emitted="setLink"></NewsScreen>
+    <PageView id="pageView" :providedLink="link"></PageView>
   </div>
 </template>
 
 <script>
-import NewsScreen from '../components/NewsScreen.vue';
-import Map from '../components/Map.vue';
+import NewsScreen from '../components/NewsScreen';
+import Map from '../components/Map';
+import PageView from '../components/PageView';
 
 export default {
   name: 'home',
   data() {
     return {
-      country: ''
+      country: '',
+      link: ''
     };
   },
   components: {
     NewsScreen,
-    Map
+    Map,
+    PageView
   },
   methods: {
     setCountry(country) {
       this.country = country;
+    },
+    setLink(link) {
+      this.link = link;
     }
   }
 };
@@ -36,5 +43,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+#pageView {
+  width: 70%;
 }
 </style>

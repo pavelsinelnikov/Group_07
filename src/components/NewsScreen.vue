@@ -35,7 +35,9 @@
                 <b-card-text>
                   {{ response.result.title }}
                 </b-card-text>
-                <b-button a :href="response.result.url" variant="primary"
+                <b-button
+                  @click="emitURL(response.result.url)"
+                  variant="primary"
                   >See more</b-button
                 >
               </b-card>
@@ -116,6 +118,9 @@ export default {
     deleteMessage(respId) {
       let index = this.newsResponse.findIndex(x => x.id == respId);
       this.newsResponse.splice(index, 1);
+    },
+    emitURL(url) {
+      this.$emit('url-emitted', url);
     }
   }
 };
