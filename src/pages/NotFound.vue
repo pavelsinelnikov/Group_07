@@ -1,6 +1,5 @@
 <template>
   <div id="not_found">
-    <img alt="Vue logo" src="./../assets/logo.png" />
     <p>404 Page not found</p>
   </div>
 </template>

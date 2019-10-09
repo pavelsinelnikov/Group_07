@@ -19,7 +19,7 @@ export default {
   },
   components: {
     NewsScreen,
-    Map,
+    Map
   },
   methods: {
     setCountry(country) {
@@ -27,7 +27,6 @@ export default {
     }
   }
 };
-
 </script>
 
 <style>

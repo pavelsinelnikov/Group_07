@@ -99,3 +99,8 @@ Our prototype will include:
   - Activity
   - Domain Model (class)
 - Favoriting Article Implementation
+
+## Potential BTS630 Tasks
+
+- Storing additional user data such as profile pictures
+- Oauth capabilities

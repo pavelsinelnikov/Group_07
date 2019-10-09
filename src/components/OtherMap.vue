@@ -3,7 +3,6 @@
 </template>
 
 <script>
-//import WorldMap from './../assets/worldIndiaHigh.svg';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
 import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldIndiaUltra';
@@ -58,6 +57,6 @@ export default {
 div {
   margin: 0 auto;
   width: 100%;
-  height: 900px;
+  height: 100vh;
 }
 </style>

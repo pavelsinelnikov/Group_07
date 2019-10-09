@@ -1,18 +1,11 @@
 import Vue from 'vue';
-//import Home from './App.vue';
-import NotFound from './pages/NotFound.vue';
-import Contact from './pages/Contact.vue';
-import About from './pages/About.vue';
+import App from './App';
 import * as VueGoogleMaps from 'vue2-google-maps';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import router from './router';
-const routes = {
-  '/contact': Contact,
-  '/': About
-};
 
 Vue.use(BootstrapVue);
 
@@ -30,16 +23,10 @@ Vue.use(VueGoogleMaps, {
 Vue.config.productionTip = false;
 
 new Vue({
+  el: '#app',
   router,
-  data: {
-    currentRoute: window.location.pathname
-  },
-  computed: {
-    ViewComponent() {
-      return routes[this.currentRoute] || NotFound;
-    }
-  },
-  render(h) {
-    return h(this.ViewComponent);
+  components: { App },
+  render: function(createElement) {
+    return createElement(App);
   }
-}).$mount('#app');
+});

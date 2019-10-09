@@ -71,11 +71,6 @@ export default {
       newsResponse: [],
       searchedLocation: '',
       loadingStatus: false
-      // countries: [
-      //   { id: 1, name: 'United Arab Emirates', code: 'ae' },
-      //   { id: 2, name: 'Argentina', code: 'ar' },
-      //   { id: 3, name: 'Austria', code: 'at' }
-      // ]
     };
   },
   computed: {

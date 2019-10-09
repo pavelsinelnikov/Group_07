@@ -5,6 +5,7 @@
 </template>
 
 <script>
+// NOTE: DOES NOT WORK WITH OTHER PAGES
 import OtherMap from './../components/OtherMap.vue';
 
 export default {
