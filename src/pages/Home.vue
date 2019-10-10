@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Home</h2>
     <Map @country-selected="setCountry" @url-emitted="setLink"></Map>
     <NewsScreen :country="country" @url-emitted="setLink"></NewsScreen>
     <PageView id="pageView" :providedLink="link"></PageView>
