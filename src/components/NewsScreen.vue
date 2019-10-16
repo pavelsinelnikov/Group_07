@@ -2,34 +2,36 @@
   <div>
     <form @submit.prevent>
       <!--TODO: Add search terms -->
-    <div class="container">
-    <div class="row">
-    <div class="col-sm">
-      <b-dropdown id="dropdown-text" text="Category" class="m-2" type="dark" variant="danger">
-        <b-dropdown-text style="width: 240px;">
-          Choose a category:
-        </b-dropdown-text>
-        <b-dropdown-divider></b-dropdown-divider>
-        <b-dropdown-item-button @click="fetchCategoryFromNewsAPI()">Sports</b-dropdown-item-button>
-        <b-dropdown-item-button @click="fetchCategoryFromNewsAPI()">Science</b-dropdown-item-button>
-        <b-dropdown-item-button @click="fetchCategoryFromNewsAPI()">Technology</b-dropdown-item-button>
-                <b-dropdown-item-button @click="fetchCategoryFromNewsAPI()">Health</b-dropdown-item-button>
-        <b-dropdown-item-button @click="fetchCategoryFromNewsAPI()">Entertainment</b-dropdown-item-button>
-      </b-dropdown>
-    </div>
-    
-    <div class="col-sm">
-      <p>Selected country: {{ country }}</p>
-    </div>
-        <div class="col-sm">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <select v-model="category" @change="fetchDataFromNewsAPI()">
+              <option disabled value="">Please select a category</option>
+              <option>all</option>
+              <option>business</option>
+              <option>entertainment</option>
+              <option>general</option>
+              <option>health</option>
+              <option>science</option>
+              <option>sports</option>
+              <option>technology</option>
+            </select>
+          </div>
 
-      <div class="input-group mb-3">
-        <input v-model="localmsg"  type="text" class="form-control" placeholder="Enter Filter Criteria">
-        <div class="input-group-append">
-          <button @click="fetchDataFromNewsAPI()" class="btn btn-outline-secondary" type="button">Search</button>
-        </div>
-      </div>      
-      <!-- <select v-model="selectedCountry">
+          <div class="col-sm">
+            <p>Selected country: {{ country }}</p>
+          </div>
+          <div class="col-sm">
+            <div class="input-group mb-3">
+              <input
+                v-model="localmsg"
+                type="text"
+                class="form-control"
+                placeholder="Enter Filter Criteria"
+                @keydown="fetchDataFromNewsAPI()"
+              />
+            </div>
+            <!-- <select v-model="selectedCountry">
         <option disabled value>Select a country...</option>
         <option
           v-for="country in countries"
@@ -38,9 +40,9 @@
           >{{ country.name }}</option
         >
       </select> -->
+          </div>
         </div>
-    </div>
-    </div>
+      </div>
     </form>
 
     <div v-if="loadingStatus">
@@ -48,7 +50,7 @@
     </div>
     <div v-else-if="newsIndex > 0">
       <ul>
-        <div class="row">
+        <div class="row" id="changeMe">
           <li v-for="response in newsResponse" :key="response.id">
             <div class="col-sm-10">
               <b-card
@@ -76,7 +78,7 @@
     <div v-else-if="hasSelected">
       <p>
         Sorry, no news for {{ searchedLocation }}, please select another
-        location
+        location or change the filters
       </p>
     </div>
     <div v-else>
@@ -90,8 +92,6 @@
 <script>
 const { getCode } = require('country-list');
 
-//?? const { getCatCode } = require('category-list');
-
 export default {
   props: ['country'],
   data() {
@@ -101,16 +101,14 @@ export default {
       hasSelected: false,
       newsResponse: [],
       searchedLocation: '',
-      loadingStatus: false
+      loadingStatus: false,
+      category: 'all'
     };
   },
   computed: {
     compCountry() {
       return getCode(this.country);
-    },
-    // compCategory() {
-    //   return getCatCode(this.category);
-    // }
+    }
   },
   watch: {
     country() {
@@ -132,6 +130,9 @@ export default {
         '&' +
         'country=' +
         this.compCountry +
+        '&' +
+        'category=' +
+        (this.category == 'all' ? '' : this.category) +
         '&' +
         'sortBy=popularity&' +
         // API Key will be given in a separate file not included in git
@@ -198,6 +199,9 @@ export default {
 </script>
 
 <style>
+#changeMe {
+  width: 100%;
+}
 ul {
   list-style-type: none;
 }
