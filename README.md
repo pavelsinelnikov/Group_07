@@ -30,29 +30,29 @@ Our prototype will include:
   - ~~Activity~~
   - ~~Domain Model (class)~~
 - ~~Integrate news API into the project~~
-- User Filter Selection Diagrams
-  - Use Case
-  - Activity
+- ~~User Filter Selection Diagrams~~
+  - ~~Use Case~~
+  - ~~Activity~~
 - User Creation/Authentication Diagrams
-  - Use Case
-  - Activity
-  - Domain Model (class)
+  - ~~Use Case~~
+  - ~~Activity~~
+  - ~~Domain Model (class)~~
   - Entity Relationship
-- Site View Diagrams
-  - Use Case
-  - Activity
-  - Domain Model (class)
+- ~~Site View Diagrams~~
+  - ~~Use Case~~
+  - ~~Activity~~
+  - ~~Domain Model (class)~~
 - Favoriting Article Diagrams
   - Use Case
   - Activity
   - Domain Model (class)
 - ~~Implement Location Pick~~
-- Implement Filter
-  - Search
-  - Category
+- ~~Implement Filter~~
+  - ~~Search~~
+  - ~~Category~~
 - Implement User Account Creation
 - Implement Authentication
-- Implement Site View
+- ~~Implement Site View~~
 - Favoriting Article Implementation
 
 ## Iteration 1 To Do List
@@ -70,21 +70,21 @@ Our prototype will include:
 
 ## Iteration 2 To Do List
 
-- Site View Diagrams
-  - Use Case
-  - Activity
-  - Domain Model (class)
-- Implement site view
-- User Filter Selection Diagrams
-  - Use Case
-  - Activity
-- Implement Filter
-  - Search
-  - Category
-- User Creation/Authentication Diagrams
-  - Use Case
-  - Activity
-  - Domain Model (class)
+- ~~Site View Diagrams~~
+  - ~~Use Case~~
+  - ~~Activity~~
+  - ~~Domain Model (class)~~
+- ~~Implement site view~~
+- ~~User Filter Selection Diagrams~~
+  - ~~Use Case~~
+  - ~~Activity~~
+- ~~Implement Filter~~
+  - ~~Search~~
+  - ~~Category~~
+- ~~User Creation/Authentication Diagrams~~
+  - ~~Use Case~~
+  - ~~Activity~~
+  - ~~Domain Model (class)~~
   - Entity Relationship
 
 ## Iteration 3 To Do List
@@ -104,3 +104,4 @@ Our prototype will include:
 
 - Storing additional user data such as profile pictures
 - Oauth capabilities
+- Coverting Google Map into SVG Map
