@@ -4,6 +4,8 @@ import Router from 'vue-router';
 import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
 import Contact from '../pages/Contact';
+import Login from '../pages/Login';
+
 //import PageView from '../pages/PageView';
 //import OtherMap from '../pages/OtherMap';
 
@@ -21,6 +23,11 @@ export default new Router({
       path: '/contact',
       name: 'Contact',
       component: Contact
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
     },
     // {
     //   path: '/pageview',
