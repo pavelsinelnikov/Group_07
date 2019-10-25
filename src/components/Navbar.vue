@@ -18,7 +18,7 @@
           <template v-slot:button-content>
             <em>User</em>
           </template>
-          <b-dropdown-item href="/login">Login</b-dropdown-item>
+          <b-dropdown-item href="/login">Login/Signup</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>

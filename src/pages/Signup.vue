@@ -1,10 +1,26 @@
 <template>
   <div class="wrapper">
     <b-form class="form-signin" @submit="onSubmit" v-if="show">
-      <h2 class="form-signin-heading">Login</h2>
+      <h2 class="form-signin-heading">Sign Up</h2>
       <b-form-group
         id="input-group-1"
       >
+        <b-form-input
+        class="form-signin"
+          id="input-1"
+          v-model="form.name"
+          type="text"
+          required
+          placeholder="Enter name"
+        ></b-form-input>
+        <b-form-input
+        class="form-signin"
+          id="input-1"
+          v-model="form.country"
+          type="text"
+          required
+          placeholder="Enter country"
+        ></b-form-input>
         <b-form-input
         class="form-signin"
           id="input-1"
@@ -25,11 +41,10 @@
 
       <b-form-group id="input-group-4">
         <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-          <b-form-checkbox value="me">Remember Me</b-form-checkbox>
+          <b-form-checkbox value="me">Receive news alerts and updates</b-form-checkbox>
         </b-form-checkbox-group>
       </b-form-group>
       <b-button class="btn btn-lg btn-primary btn-block" type="submit" variant="primary">Submit</b-button>
-      <h3 class="form-signup">Dont have an account?<a href="/signup">Sign up!</a></h3>
     </b-form>
     <!-- THIS IS TEMPORARY FOR DEVELOPING PURPOSES -->
     <b-card class="mt-3" header="Form Data Result">
@@ -42,6 +57,8 @@
     data() {
       return {
         form: {
+          name: '',
+          country: '',
           email: '',
           password: '',
           checked: []
@@ -76,10 +93,7 @@ body {
   background-color: #fff;
   border: 1px solid rgba(0,0,0,0.1);  
 }
-.form-signup{
-    font-size: 16px;
 
-}
 .form-signin-heading,
 .checkbox {
   margin-bottom: 30px;

@@ -5,6 +5,7 @@ import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
 import Contact from '../pages/Contact';
 import Login from '../pages/Login';
+import Signup from '../pages/Signup';
 
 //import PageView from '../pages/PageView';
 //import OtherMap from '../pages/OtherMap';
@@ -28,6 +29,11 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/signup',
+      name: 'Signup',
+      component: Signup
     },
     // {
     //   path: '/pageview',
