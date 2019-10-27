@@ -12,7 +12,7 @@ import Signup from '../pages/Signup';
 
 Vue.use(Router);
 
-export const router = new Router({
+export default new Router({
   mode: 'history',
   routes: [
     {

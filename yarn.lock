@@ -8743,10 +8743,10 @@ vue-router@^3.1.3:
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.1.3.tgz#e6b14fabc0c0ee9fda0e2cbbda74b350e28e412b"
   integrity sha512-8iSa4mGNXBjyuSZFCCO4fiKfvzqk+mhL0lnKuGcQtO1eoj8nq3CmbEG8FwK5QqoqwDgsjsf1GDuisDX4cdb/aQ==
 
-vue-session@^0.9.10:
-  version "0.9.10"
-  resolved "https://registry.yarnpkg.com/vue-session/-/vue-session-0.9.10.tgz#0bf5a2dc4e6e6421651ea0aefa68faf6ebc3febc"
-  integrity sha1-C/Wi3E5uZCFlHqCu+mj69uvD/rw=
+vue-session@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vue-session/-/vue-session-1.0.0.tgz#ca642c751f569a48f8dd66f356f1727fbe081f7c"
+  integrity sha512-Ep9lRKGgCZdcGV3In3R3zoSp5Wr+hlcIc8WJ9BG+QKzibwaFZnnvp9HBVdd+dU8d6HGLSi5sWywDmd5MkrkfoQ==
 
 vue-style-loader@^4.1.0:
   version "4.1.2"
