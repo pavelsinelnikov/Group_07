@@ -4,8 +4,16 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-
 import router from './router';
+//import axios from 'axios';
+
+// const http = axios.create({
+//   baseURL: process.env.BACKEND_URL
+//     ? process.env.BACKEND_URL
+//     : 'http://localhost/login'
+// });
+
+// Vue.prototype.$http = http;
 
 Vue.use(BootstrapVue);
 

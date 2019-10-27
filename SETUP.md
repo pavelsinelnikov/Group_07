@@ -38,4 +38,28 @@ VUE_APP_GOOGLE_API=APIKEY
 
 3. Done!
 
+## Steps for setting up the database and Database management software
+
+1. Download Docker
+2. Download Dbeaver (or any other mySQL management software such as mySQL Workbench)
+3. Go to your console and type:
+
+```
+docker run --name mysql-bts -p 3306:3306 -e MYSQL_ROOT_PASSWORD=mypassword -d mysql:latest
+docker exec -it mysql-bts bash
+ALTER USER 'root' IDENTIFIED WITH mysql_native_password BY 'mypassword';
+```
+
+The first line initializes the docker container with mysql, the second and third line converts the password to a 'legacy' version so that you can use it within the server
+
+4. Start Dbeaver (or other mySQL management software) and create a new connection using the credentials:
+
+**Host** - localhost  
+**Port** - 3306  
+**Name** - blank  
+**Username** - root  
+**Password** - mypassword
+
+5. Done!
+
 If you need additional clarification on any items, send me a message. I will be happy to help :)
