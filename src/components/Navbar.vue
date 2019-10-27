@@ -16,9 +16,10 @@
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
           <template v-slot:button-content>
-            <em>User</em>
+            <em> {{ user }} </em>
           </template>
-          <b-dropdown-item href="/login">Login/Signup</b-dropdown-item>
+          <b-dropdown-item v-if="user == 'log in'" href="/login">Login/Signup</b-dropdown-item>
+          <b-dropdown-item v-else @click="logout()">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
@@ -41,8 +42,24 @@ export default {
           text: 'Contact',
           page: '/contact'
         }
-      ]
+      ],
+      user: this.user
     };
+  },
+  beforeCreate: function () {
+    if (this.$session.exists()) {
+      this.user = this.$session.get('user')
+    }
+    else {
+      this.user = 'log in'
+    }
+  },
+  methods: {
+    logout: function () {
+        this.$session.destroy()
+        this.$router.push('/')
+        this.$router.go()
+    }
   }
 };
 </script>

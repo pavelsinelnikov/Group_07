@@ -6,6 +6,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import router from './router';
+import VueSession from 'vue-session'
+
+var options = {
+    persist: true
+}
+
+Vue.use(VueSession, options)
 
 Vue.use(BootstrapVue);
 

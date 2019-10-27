@@ -52,7 +52,10 @@
     methods: {
       onSubmit(evt) {
         evt.preventDefault()
-        alert(JSON.stringify(this.form))
+        this.$session.start()
+        this.$session.set('user', this.form.email)
+        this.$router.push('/')
+        this.$router.go()
       }
     }
   }
@@ -61,10 +64,10 @@
 <style>
 
 body {
-	background: #eee !important;	
+	background: #eee !important;
 }
 
-.wrapper {	
+.wrapper {
 	margin-top: 80px;
   margin-bottom: 80px;
 }
@@ -74,7 +77,7 @@ body {
   padding: 15px 35px 45px;
   margin: 0 auto;
   background-color: #fff;
-  border: 1px solid rgba(0,0,0,0.1);  
+  border: 1px solid rgba(0,0,0,0.1);
 }
 .form-signup{
     font-size: 16px;
@@ -89,7 +92,7 @@ body {
   position: relative;
   font-size: 16px;
   height: auto;
-  padding: 10px;	
+  padding: 10px;
 }
 
 input[type="email"] {
