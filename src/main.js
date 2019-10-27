@@ -15,6 +15,14 @@ import router from './router';
 
 // Vue.prototype.$http = http;
 
+import VueSession from 'vue-session';
+
+var options = {
+  persist: true
+};
+
+Vue.use(VueSession, options);
+
 Vue.use(BootstrapVue);
 
 Vue.use(VueGoogleMaps, {
