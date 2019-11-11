@@ -5,6 +5,9 @@ import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import router from './router';
+
+//Vue.http.headers.common['Access-Control-Allow-Origin'] = '*';
+//Vue.http.headers.common['Access-Control-Request-Method'] = '*';
 //import axios from 'axios';
 
 // const http = axios.create({
