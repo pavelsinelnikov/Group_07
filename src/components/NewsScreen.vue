@@ -23,8 +23,8 @@
         >
       </select> -->
         </b-row>
-                <b-row>
-            <select v-model="category" @change="fetchDataFromNewsAPI()">
+          <b-row>
+            <b-form-select v-model="category" @change="fetchDataFromNewsAPI()">
               <option disabled value="">Please select a category</option>
               <option>all</option>
               <option>business</option>
@@ -34,7 +34,7 @@
               <option>science</option>
               <option>sports</option>
               <option>technology</option>
-            </select>
+            </b-form-select>
         </b-row>
 
         <b-row>
