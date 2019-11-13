@@ -80,11 +80,11 @@ export default {
         }
       })
         .then(res => {
-          if (res.data) {
+          if (res.data === true) {
             this.$router.push('/login');
             this.$router.go();
           } else {
-            this.errorMsg = 'Something went wrong';
+            this.errorMsg = res.data;
             this.showError = true;
           }
         })
