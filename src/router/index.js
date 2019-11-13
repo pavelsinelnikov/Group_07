@@ -6,6 +6,8 @@ import NotFound from '../pages/NotFound';
 import Contact from '../pages/Contact';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
+import Verification from '../pages/Verification';
+import NoAccess from '../pages/NoAccess';
 
 //import PageView from '../pages/PageView';
 //import OtherMap from '../pages/OtherMap';
@@ -34,6 +36,16 @@ export default new Router({
       path: '/signup',
       name: 'Signup',
       component: Signup
+    },
+    {
+      path: '/verification',
+      name: 'verification',
+      component: Verification
+    },
+    {
+      path: '/noaccess',
+      name: 'NoAccess',
+      component: NoAccess
     },
     // {
     //   path: '/pageview',

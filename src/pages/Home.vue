@@ -1,16 +1,18 @@
 <template>
   <div>
-    <b-container class="bv-example-row">
-        <b-row>
-          <b-col>    
-                <NewsScreen :country="country" @url-emitted="setLink"></NewsScreen>
-          </b-col>
-          <b-col cols="7">
-                <Map @country-selected="setCountry" @url-emitted="setLink"></Map>
-                <PageView id="pageView" :providedLink="link"></PageView>
-          </b-col>
-      </b-row>
-  </b-container>
+    <b-row>
+      <b-col cols="6">
+        <NewsScreen
+          :country="country"
+          @url-emitted="setLink"
+          id="apply-width"
+        ></NewsScreen>
+      </b-col>
+      <b-col cols="6">
+        <Map @country-selected="setCountry" @url-emitted="setLink"></Map>
+        <PageView id="pageView" :providedLink="link"></PageView>
+      </b-col>
+    </b-row>
   </div>
 </template>
 
@@ -52,7 +54,11 @@ export default {
   color: #2c3e50;
 }
 
-#pageView {
-  width: 70%;
+#page-view {
+  width: 100%;
+}
+
+#apply-width {
+  width: 90%;
 }
 </style>

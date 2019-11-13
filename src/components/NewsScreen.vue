@@ -4,75 +4,61 @@
       <!--TODO: Add search terms -->
       <b-container class="mycontainer">
         <b-row>
-            <div class="input-group mb-3">
-              <input
-                v-model="localmsg"
-                type="text"
-                class="form-control"
-                placeholder="Enter Filter Criteria"
-                @keydown="fetchDataFromNewsAPI()"
-              />
-            </div>
-            <!-- <select v-model="selectedCountry">
-        <option disabled value>Select a country...</option>
-        <option
-          v-for="country in countries"
-          :key="country.id"
-          :value="country.code"
-          >{{ country.name }}</option
-        >
-      </select> -->
+          <div class="input-group mb-3">
+            <input
+              v-model="localmsg"
+              type="text"
+              class="form-control"
+              placeholder="Enter Filter Criteria"
+              @keydown="fetchDataFromNewsAPI()"
+            />
+          </div>
         </b-row>
-          <b-row>
-            <b-form-select v-model="category" @change="fetchDataFromNewsAPI()">
-              <option disabled value="">Please select a category</option>
-              <option>all</option>
-              <option>business</option>
-              <option>entertainment</option>
-              <option>general</option>
-              <option>health</option>
-              <option>science</option>
-              <option>sports</option>
-              <option>technology</option>
-            </b-form-select>
-        </b-row>
-
         <b-row>
-            <p>Selected country: {{ country }}</p>
+          <b-form-select v-model="category" @change="fetchDataFromNewsAPI()">
+            <option disabled value="">Please select a category</option>
+            <option>all</option>
+            <option>business</option>
+            <option>entertainment</option>
+            <option>general</option>
+            <option>health</option>
+            <option>science</option>
+            <option>sports</option>
+            <option>technology</option>
+          </b-form-select>
         </b-row>
 
-    </b-container>
+        <b-row id="selected-country">
+          <p>Selected country: {{ country }}</p>
+        </b-row>
+      </b-container>
     </form>
 
     <div v-if="loadingStatus">
       <p>Loading...</p>
     </div>
     <div v-else-if="newsIndex > 0">
-      <ul>
-        <div class="row" id="changeMe">
-          <li v-for="response in newsResponse" :key="response.id">
-            <div class="col-sm-10">
-              <b-card
-                title=" "
-                img-top
-                tag="article"
-                style="max-width: 20rem;
+      <div class="row" id="changeMe">
+        <li v-for="response in newsResponse" :key="response.id">
+          <div class="col-sm-6">
+            <b-card
+              title=" "
+              img-top
+              tag="article"
+              style="max-width: 20rem;
                         min-width: 20rem;"
-                class="mb-4"
+              class="mb-3"
+            >
+              <b-card-text>
+                {{ response.result.title }}
+              </b-card-text>
+              <b-button @click="emitURL(response.result.url)" variant="primary"
+                >See more</b-button
               >
-                <b-card-text>
-                  {{ response.result.title }}
-                </b-card-text>
-                <b-button
-                  @click="emitURL(response.result.url)"
-                  variant="primary"
-                  >See more</b-button
-                >
-              </b-card>
-            </div>
-          </li>
-        </div>
-      </ul>
+            </b-card>
+          </div>
+        </li>
+      </div>
     </div>
     <div v-else-if="hasSelected">
       <p>
@@ -82,7 +68,7 @@
     </div>
     <div v-else>
       <p>
-        Press Search!
+        Click a country on the map
       </p>
     </div>
   </div>
@@ -199,12 +185,13 @@ export default {
 
 <style>
 #changeMe {
-  width: 100%;
-}
-ul {
   list-style-type: none;
-  max-height: 700px;
-    margin-bottom: 10px;
-    overflow:scroll;
+  max-height: 20vw;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+p {
+  margin: 0 auto;
 }
 </style>

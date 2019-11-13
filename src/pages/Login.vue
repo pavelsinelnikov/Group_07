@@ -2,6 +2,9 @@
   <div class="wrapper">
     <b-form class="form-signin" @submit="onSubmit" v-if="show">
       <h2 class="form-signin-heading">Login</h2>
+      <b-alert v-model="showError" variant="danger" dismissible>
+        {{ errorMsg }}
+      </b-alert>
       <b-form-group id="input-group-1">
         <b-form-input
           class="form-signin"
@@ -50,7 +53,9 @@ export default {
         password: '',
         checked: []
       },
-      show: true
+      show: true,
+      errorMsg: '',
+      showError: false
     };
   },
   methods: {
@@ -60,7 +65,7 @@ export default {
         method: 'post',
         url: 'http://localhost:3000/user/auth',
         data: {
-          username: this.form.email,
+          email: this.form.email,
           password: this.form.password
         }
       })
@@ -71,13 +76,20 @@ export default {
             this.$router.push('/');
             this.$router.go();
           } else {
-            // Should return inside the page (displayed as an error message)
-            console.log(res);
+            this.errorMsg = 'Incorrect username/password!';
+            this.showError = true;
           }
         })
         .catch(err => {
-          console.log(err);
+          this.errorMsg = err;
+          this.showError = true;
         });
+    }
+  },
+  beforeCreate() {
+    if (this.$session.exists()) {
+      this.$router.push('/');
+      this.$router.go();
     }
   }
 };

@@ -2,6 +2,9 @@
   <div class="wrapper">
     <b-form class="form-signin" @submit="onSubmit" v-if="show">
       <h2 class="form-signin-heading">Sign Up</h2>
+      <b-alert v-model="showError" variant="danger" dismissible>
+        {{ errorMsg }}
+      </b-alert>
       <b-form-group id="input-group-1">
         <b-form-input
           class="form-signin"
@@ -10,14 +13,6 @@
           type="text"
           required
           placeholder="Enter name"
-        ></b-form-input>
-        <b-form-input
-          class="form-signin"
-          id="input-1"
-          v-model="form.country"
-          type="text"
-          required
-          placeholder="Enter country"
         ></b-form-input>
         <b-form-input
           class="form-signin"
@@ -67,7 +62,9 @@ export default {
         password: '',
         checked: []
       },
-      show: true
+      show: true,
+      errorMsg: '',
+      showError: false
     };
   },
   methods: {
@@ -77,7 +74,7 @@ export default {
         method: 'post',
         url: 'http://localhost:3000/user/create',
         data: {
-          username: this.form.email,
+          username: this.form.name,
           email: this.form.email,
           password: this.form.password
         }
@@ -87,12 +84,13 @@ export default {
             this.$router.push('/login');
             this.$router.go();
           } else {
-            // Should return inside the page (Error message)
-            console.log(res);
+            this.errorMsg = 'Something went wrong';
+            this.showError = true;
           }
         })
         .catch(err => {
-          console.log(err);
+          this.errorMsg = err;
+          this.showError = true;
         });
     }
   }
