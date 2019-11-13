@@ -102,10 +102,11 @@ body {
 }
 .form-signup {
   font-size: 16px;
+  padding-top: 30px;
 }
 .form-signin-heading,
-.checkbox {
-  margin-bottom: 30px;
+#checkboxes-4 {
+  padding-bottom: 10px;
 }
 
 .form-control {
@@ -121,7 +122,6 @@ input[type='email'] {
 }
 
 input[type='password'] {
-  margin-bottom: 20px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }
