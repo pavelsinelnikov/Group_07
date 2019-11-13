@@ -1,8 +1,16 @@
 <template>
   <div>
-    <Map @country-selected="setCountry" @url-emitted="setLink"></Map>
-    <NewsScreen :country="country" @url-emitted="setLink"></NewsScreen>
-    <PageView id="pageView" :providedLink="link"></PageView>
+    <b-container class="bv-example-row">
+        <b-row>
+          <b-col>    
+                <NewsScreen :country="country" @url-emitted="setLink"></NewsScreen>
+          </b-col>
+          <b-col cols="7">
+                <Map @country-selected="setCountry" @url-emitted="setLink"></Map>
+                <PageView id="pageView" :providedLink="link"></PageView>
+          </b-col>
+      </b-row>
+  </b-container>
   </div>
 </template>
 

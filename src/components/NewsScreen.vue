@@ -2,26 +2,8 @@
   <div>
     <form @submit.prevent>
       <!--TODO: Add search terms -->
-      <div class="container">
-        <div class="row">
-          <div class="col-sm">
-            <select v-model="category" @change="fetchDataFromNewsAPI()">
-              <option disabled value="">Please select a category</option>
-              <option>all</option>
-              <option>business</option>
-              <option>entertainment</option>
-              <option>general</option>
-              <option>health</option>
-              <option>science</option>
-              <option>sports</option>
-              <option>technology</option>
-            </select>
-          </div>
-
-          <div class="col-sm">
-            <p>Selected country: {{ country }}</p>
-          </div>
-          <div class="col-sm">
+      <b-container class="mycontainer">
+        <b-row>
             <div class="input-group mb-3">
               <input
                 v-model="localmsg"
@@ -40,9 +22,26 @@
           >{{ country.name }}</option
         >
       </select> -->
-          </div>
-        </div>
-      </div>
+        </b-row>
+                <b-row>
+            <select v-model="category" @change="fetchDataFromNewsAPI()">
+              <option disabled value="">Please select a category</option>
+              <option>all</option>
+              <option>business</option>
+              <option>entertainment</option>
+              <option>general</option>
+              <option>health</option>
+              <option>science</option>
+              <option>sports</option>
+              <option>technology</option>
+            </select>
+        </b-row>
+
+        <b-row>
+            <p>Selected country: {{ country }}</p>
+        </b-row>
+
+    </b-container>
     </form>
 
     <div v-if="loadingStatus">
@@ -204,5 +203,8 @@ export default {
 }
 ul {
   list-style-type: none;
+  max-height: 700px;
+    margin-bottom: 10px;
+    overflow:scroll;
 }
 </style>
