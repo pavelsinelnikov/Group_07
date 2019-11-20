@@ -33,25 +33,25 @@ Our prototype will include:
 - ~~User Filter Selection Diagrams~~
   - ~~Use Case~~
   - ~~Activity~~
-- User Creation/Authentication Diagrams
+- ~~User Creation/Authentication Diagrams~~
   - ~~Use Case~~
   - ~~Activity~~
   - ~~Domain Model (class)~~
-  - Entity Relationship
+  - ~~Entity Relationship~~
 - ~~Site View Diagrams~~
   - ~~Use Case~~
   - ~~Activity~~
   - ~~Domain Model (class)~~
-- Favoriting Article Diagrams
-  - Use Case
-  - Activity
-  - Domain Model (class)
+- ~~Favoriting Article Diagrams~~
+  - ~~Use Case~~
+  - ~~Activity~~
+  - ~~Domain Model (class)~~
 - ~~Implement Location Pick~~
 - ~~Implement Filter~~
   - ~~Search~~
   - ~~Category~~
-- Implement User Account Creation
-- Implement Authentication
+- ~~Implement User Account Creation~~
+- ~~Implement Authentication~~
 - ~~Implement Site View~~
 - Favoriting Article Implementation
 
@@ -94,10 +94,10 @@ Our prototype will include:
 
 ## Iteration 4 To Do List
 
-- Favoriting Article Diagrams
-  - Use Case
-  - Activity
-  - Domain Model (class)
+- ~~Favoriting Article Diagrams~~
+  - ~~Use Case~~
+  - ~~Activity~~
+  - ~~Domain Model (class)~~
 - Favoriting Article Implementation
 - Implement User Profile Page
 - User History
