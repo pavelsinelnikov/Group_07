@@ -85,12 +85,12 @@ Our prototype will include:
   - ~~Use Case~~
   - ~~Activity~~
   - ~~Domain Model (class)~~
-  - Entity Relationship
+  - ~~Entity Relationship~~
 
 ## Iteration 3 To Do List
 
-- Implement User Account Creation
-- Implement Authentication
+- ~~Implement User Account Creation~~
+- ~~Implement Authentication~~
 
 ## Iteration 4 To Do List
 
@@ -100,6 +100,7 @@ Our prototype will include:
   - Domain Model (class)
 - Favoriting Article Implementation
 - Implement User Profile Page
+- User History
 
 ## Potential BTS630 Tasks
 
