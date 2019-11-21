@@ -38,27 +38,25 @@
       <p>Loading...</p>
     </div>
     <div v-else-if="newsIndex > 0">
-      <div class="row" id="changeMe">
-        <li v-for="response in newsResponse" :key="response.id">
-          <div class="col-sm-6">
-            <b-card
-              title=" "
-              img-top
-              tag="article"
-              style="max-width: 20rem;
-                        min-width: 20rem;"
-              class="mb-3"
-            >
-              <b-card-text>
-                {{ response.result.title }}
-              </b-card-text>
-              <b-button @click="emitURL(response.result.url)" variant="primary"
-                >See more</b-button
-              >
-            </b-card>
-          </div>
+      <div id="articlelist">
+        <li v-for="response in newsResponse" :key="response.id">              
+     <b-card no-body class="overflow-hidden" style="max-width: 1000px;">
+     <a href="#" @click="emitURL(response.result.url)" class="stretched-link"></a>
+    <b-row no-gutters>
+      <b-col md="6">
+        <b-card-img v-bind:src="response.result.urlToImage" class="rounded-0"></b-card-img>
+      </b-col>
+      <b-col md="6">
+        <b-card-body id="title" v-bind:title="response.result.title">
+          <b-card-text id="desc">
+            {{response.result.description}}
+          </b-card-text>
+        </b-card-body>
+      </b-col>
+    </b-row>
+  </b-card>
         </li>
-      </div>
+        </div>
     </div>
     <div v-else-if="hasSelected">
       <p>
@@ -184,13 +182,24 @@ export default {
 </script>
 
 <style>
-#changeMe {
-  list-style-type: none;
-  max-height: 20vw;
-  overflow: scroll;
-  overflow-x: hidden;
-}
 
+#articlelist {
+  list-style-type: none;
+  max-height: 40vw;
+  overflow: scroll;
+}
+#title {
+  font-weight: 700;
+  font-size: 1.65em;
+  font-family: 'Roboto', sans-serif;
+  color: #000;
+  text-decoration: none !important;
+  text-align: left;
+}
+#desc {
+  font-weight: 100;
+  font-size: 0.65em;
+}
 p {
   margin: 0 auto;
 }
