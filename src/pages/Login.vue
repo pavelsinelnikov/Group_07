@@ -72,7 +72,7 @@ export default {
         .then(res => {
           if (res.data) {
             this.$session.start();
-            this.$session.set('user', this.form.email);
+            this.$session.set('email', this.form.email);
             this.$router.push('/');
             this.$router.go();
           } else {

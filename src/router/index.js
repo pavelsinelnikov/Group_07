@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
 import Contact from '../pages/Contact';
+import Profile from '../pages/Profile';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Verification from '../pages/Verification';
@@ -26,6 +27,11 @@ export default new Router({
       path: '/contact',
       name: 'Contact',
       component: Contact
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile
     },
     {
       path: '/login',

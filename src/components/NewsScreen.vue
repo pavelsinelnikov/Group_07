@@ -39,24 +39,37 @@
     </div>
     <div v-else-if="newsIndex > 0">
       <div id="articlelist">
-        <li v-for="response in newsResponse" :key="response.id">              
-     <b-card no-body class="overflow-hidden" style="max-width: 1000px;">
-     <a href="#" @click="emitURL(response.result.url)" class="stretched-link"></a>
-    <b-row no-gutters>
-      <b-col md="6">
-        <b-card-img v-bind:src="response.result.urlToImage" class="rounded-0"></b-card-img>
-      </b-col>
-      <b-col md="6">
-        <b-card-body id="title" v-bind:title="response.result.title">
-          <b-card-text id="desc">
-            {{response.result.description}}
-          </b-card-text>
-        </b-card-body>
-      </b-col>
-    </b-row>
-  </b-card>
+        <li v-for="response in newsResponse" :key="response.id">
+          <b-card no-body class="overflow-hidden" style="max-width: 1000px;">
+            <b-row no-gutters>
+              <b-col md="6">
+                <b-card-img
+                  v-bind:src="response.result.urlToImage"
+                  class="rounded-0"
+                ></b-card-img>
+              </b-col>
+              <b-col md="6">
+                <b-checkbox v-bind:title="response.result.title"
+                  >Favorite</b-checkbox
+                >
+                <a
+                  href="#"
+                  @click="
+                    emitURL(response.result.url);
+                    addToHistory(response.result);
+                  "
+                >
+                  <b-card-body id="title" v-bind:title="response.result.title">
+                    <b-card-text id="desc">
+                      {{ response.result.description }}
+                    </b-card-text>
+                  </b-card-body>
+                </a>
+              </b-col>
+            </b-row>
+          </b-card>
         </li>
-        </div>
+      </div>
     </div>
     <div v-else-if="hasSelected">
       <p>
@@ -73,6 +86,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 const { getCode } = require('country-list');
 
 export default {
@@ -85,7 +99,8 @@ export default {
       newsResponse: [],
       searchedLocation: '',
       loadingStatus: false,
-      category: 'all'
+      category: 'all',
+      infomsg: ''
     };
   },
   computed: {
@@ -176,13 +191,52 @@ export default {
     },
     emitURL(url) {
       this.$emit('url-emitted', url);
+    },
+    addToFavorites(url) {
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/user/addToFavorites',
+        data: {
+          url: url,
+          email: this.$session.get('email')
+        }
+      })
+        .then(res => {
+          if (res.data) {
+            this.localmsg = 'Favorites successfully added!';
+          } else {
+            this.localmsg = 'Favorites could not be added!';
+          }
+        })
+        .catch(err => {
+          this.localmsg = err;
+        });
+    },
+    addToHistory(result) {
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/user/addToHistory',
+        data: {
+          result: result,
+          email: this.$session.get('email')
+        }
+      })
+        .then(res => {
+          if (res.data) {
+            this.localmsg = 'History successfully added!';
+          } else {
+            this.localmsg = 'History could not be added!';
+          }
+        })
+        .catch(err => {
+          this.localmsg = err;
+        });
     }
   }
 };
 </script>
 
 <style>
-
 #articlelist {
   list-style-type: none;
   max-height: 40vw;
