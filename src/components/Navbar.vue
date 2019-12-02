@@ -23,7 +23,10 @@
             <b-dropdown-item v-if="user == 'log in'" href="/login"
               >Login/Signup</b-dropdown-item
             >
-            <b-dropdown-item v-else @click="logout()">Logout</b-dropdown-item>
+            <div v-else>
+              <b-dropdown-item href="/profile">Profile</b-dropdown-item>
+              <b-dropdown-item @click="logout()">Logout</b-dropdown-item>
+            </div>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
