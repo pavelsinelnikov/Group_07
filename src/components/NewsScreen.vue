@@ -49,9 +49,8 @@
                 ></b-card-img>
               </b-col>
               <b-col md="6">
-                <b-checkbox v-bind:title="response.result.title"
-                  >Favorite</b-checkbox
-                >
+                <b-checkbox v-bind:title="response.result.title" :checked="compareToFavorites(response)" @change="addToFavorites(response.result.title);"
+                  >Favorite</b-checkbox>
                 <a
                   href="#"
                   @click="
@@ -100,7 +99,8 @@ export default {
       searchedLocation: '',
       loadingStatus: false,
       category: 'all',
-      infomsg: ''
+      infomsg: '',
+      favoriteCheck: []
     };
   },
   computed: {
@@ -146,6 +146,7 @@ export default {
             // TODO: Change id field to something better rather than a count
             this.newsResponse.push({ id: this.newsIndex++, result: result });
           });
+          this.checkFavorites();
         });
       this.searchedLocation = this.country;
     },
@@ -192,20 +193,44 @@ export default {
     emitURL(url) {
       this.$emit('url-emitted', url);
     },
+    checkFavorites() {
+      axios({
+        method: 'post',
+        url: 'http://localhost:3000/user/checkFavorites',
+        data: {
+          email: this.$session.get('email'),
+          article: this.newsResponse
+        }
+      })
+        .then(res => {
+          this.favoriteCheck = res.data;
+        })
+        .catch(err => {
+          this.localmsg = err;
+        });
+    },
+    compareToFavorites(response){
+      for (let entry of this.favoriteCheck){
+        if ((entry) && (entry.article == response.result.title)){
+          return true;
+        }
+      }
+      return false;
+    },
     addToFavorites(url) {
       axios({
         method: 'post',
         url: 'http://localhost:3000/user/addToFavorites',
         data: {
-          url: url,
-          email: this.$session.get('email')
+          email: this.$session.get('email'),
+          url: url
         }
       })
         .then(res => {
           if (res.data) {
-            this.localmsg = 'Favorites successfully added!';
+            this.localmsg = 'Favorite successfully added!';
           } else {
-            this.localmsg = 'Favorites could not be added!';
+            this.localmsg = 'Favorite removed!';
           }
         })
         .catch(err => {

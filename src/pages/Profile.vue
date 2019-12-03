@@ -9,7 +9,7 @@
         <h3>Favorites</h3>
         <div v-if="favorites.length > 0">
           <div id="articlelist">
-            <li v-for="favorite in favorites" :key="favorite.id">
+            <li v-for="favorite in favorites" :key="favorite.article">
               <b-card
                 no-body
                 class="overflow-hidden"
@@ -17,7 +17,7 @@
               >
                 <b-row no-gutters>
                   <b-col md="12">
-                    <b-card-body id="title" v-bind:title="favorite.title">
+                    <b-card-body id="title" v-bind:title="favorite.article">
                     </b-card-body>
                   </b-col>
                 </b-row>
@@ -89,6 +89,10 @@ export default {
 
           for (let hist of res.data.oneUser.history) {
             this.history.push(JSON.parse(hist));
+          }
+
+          for (let fav of res.data.article){
+            this.favorites.push(fav);
           }
 
           // this.favorites = JSON.parse(res.data.oneUser.favorites);
