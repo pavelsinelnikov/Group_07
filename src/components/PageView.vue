@@ -23,4 +23,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+iframe {
+  height: 70vh;
+}
+</style>

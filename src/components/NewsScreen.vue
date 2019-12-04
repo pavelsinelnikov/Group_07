@@ -1,5 +1,6 @@
 <template>
   <div>
+    <b-alert v-if="infomsg" show>{{ infomsg }}</b-alert>
     <form @submit.prevent>
       <!--TODO: Add search terms -->
       <b-container class="mycontainer">
@@ -49,8 +50,13 @@
                 ></b-card-img>
               </b-col>
               <b-col md="6">
-                <b-checkbox v-bind:title="response.result.title" :checked="compareToFavorites(response)" @change="addToFavorites(response.result.title);"
-                  >Favorite</b-checkbox>
+                <b-checkbox
+                  v-if="sessionExists"
+                  v-bind:title="response.result.title"
+                  :checked="compareToFavorites(response)"
+                  @change="addToFavorites(response.result)"
+                  >Favorite</b-checkbox
+                >
                 <a
                   href="#"
                   @click="
@@ -106,6 +112,10 @@ export default {
   computed: {
     compCountry() {
       return getCode(this.country);
+    },
+
+    sessionExists() {
+      return this.$session.exists();
     }
   },
   watch: {
@@ -206,56 +216,61 @@ export default {
           this.favoriteCheck = res.data;
         })
         .catch(err => {
-          this.localmsg = err;
+          this.infomsg = err;
         });
     },
-    compareToFavorites(response){
-      for (let entry of this.favoriteCheck){
-        if ((entry) && (entry.article == response.result.title)){
+    compareToFavorites(response) {
+      for (let entry of this.favoriteCheck) {
+        if (entry && entry.articleTitle == response.result.title) {
           return true;
         }
       }
       return false;
     },
-    addToFavorites(url) {
-      axios({
-        method: 'post',
-        url: 'http://localhost:3000/user/addToFavorites',
-        data: {
-          email: this.$session.get('email'),
-          url: url
-        }
-      })
-        .then(res => {
-          if (res.data) {
-            this.localmsg = 'Favorite successfully added!';
-          } else {
-            this.localmsg = 'Favorite removed!';
+    addToFavorites(result) {
+      if (this.$session.exists()) {
+        axios({
+          method: 'post',
+          url: 'http://localhost:3000/user/addToFavorites',
+          data: {
+            email: this.$session.get('email'),
+            title: result.title,
+            url: result.url
           }
         })
-        .catch(err => {
-          this.localmsg = err;
-        });
+          .then(res => {
+            if (res.data) {
+              this.infomsg = 'Favorite successfully added!';
+            } else {
+              this.infomsg = 'Favorite removed!';
+            }
+          })
+          .catch(err => {
+            this.infomsg = err;
+          });
+      }
     },
     addToHistory(result) {
-      axios({
-        method: 'POST',
-        url: 'http://localhost:3000/user/addToHistory',
-        data: {
-          result: result,
-          email: this.$session.get('email')
-        }
-      })
-        .then(res => {
-          if (res.data) {
-            this.localmsg = 'History successfully added!';
-          } else {
-            this.localmsg = 'History could not be added!';
+      if (this.$session.exists()) {
+        axios({
+          method: 'POST',
+          url: 'http://localhost:3000/user/addToHistory',
+          data: {
+            result: result,
+            email: this.$session.get('email')
           }
         })
-        .catch(err => {
-          this.localmsg = err;
-        });
+          .then(res => {
+            if (res.data) {
+              this.infomsg = 'History successfully added!';
+            } else {
+              this.infomsg = 'History could not be added!';
+            }
+          })
+          .catch(err => {
+            this.infomsg = err;
+          });
+      }
     }
   }
 };
@@ -264,7 +279,7 @@ export default {
 <style>
 #articlelist {
   list-style-type: none;
-  max-height: 40vw;
+  max-height: 124vh;
   overflow: scroll;
 }
 #title {

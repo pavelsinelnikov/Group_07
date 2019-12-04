@@ -9,18 +9,16 @@
         <h3>Favorites</h3>
         <div v-if="favorites.length > 0">
           <div id="articlelist">
-            <li v-for="favorite in favorites" :key="favorite.article">
+            <li v-for="favorite in favorites" :key="favorite.id">
               <b-card
                 no-body
                 class="overflow-hidden"
                 style="max-width: 1000px;"
               >
-                <b-row no-gutters>
-                  <b-col md="12">
-                    <b-card-body id="title" v-bind:title="favorite.article">
-                    </b-card-body>
-                  </b-col>
-                </b-row>
+                <a :href="favorite.articleURL"
+                  ><b-card-body id="title" v-bind:title="favorite.articleTitle">
+                  </b-card-body>
+                </a>
               </b-card>
             </li>
           </div>
@@ -36,12 +34,10 @@
                 class="overflow-hidden"
                 style="max-width: 1000px;"
               >
-                <b-row no-gutters>
-                  <b-col md="12">
-                    <b-card-body id="title" v-bind:title="article.title">
-                    </b-card-body>
-                  </b-col>
-                </b-row>
+                <a :href="article.url">
+                  <b-card-body id="title" v-bind:title="article.title">
+                  </b-card-body>
+                </a>
               </b-card>
             </li>
           </div>
@@ -72,7 +68,6 @@ export default {
     }
   },
   mounted() {
-    //console.log(this.$session.getAll());
     axios({
       method: 'get',
       url: 'http://localhost:3000/user/profile',
@@ -83,7 +78,6 @@ export default {
     })
       .then(res => {
         if (res.data) {
-          //this.localmsg = res.data;
           this.username = res.data.oneUser.username;
           this.email = res.data.oneUser.email;
 
@@ -91,28 +85,25 @@ export default {
             this.history.push(JSON.parse(hist));
           }
 
-          for (let fav of res.data.article){
+          console.log(this.history);
+
+          for (let fav of res.data.article) {
             this.favorites.push(fav);
           }
 
-          // this.favorites = JSON.parse(res.data.oneUser.favorites);
+          console.log(this.favorites);
         } else {
           this.localmsg = 'Profile not found!';
         }
       })
-      .catch(err => {
-        this.localmsg = err;
-      });
+      .catch
+      //this.localmsg = err;
+      ();
   }
 };
 </script>
 
 <style>
-#articlelist {
-  list-style-type: none;
-  max-height: 40vw;
-  overflow: scroll;
-}
 #title {
   font-weight: 700;
   font-size: 1.65em;

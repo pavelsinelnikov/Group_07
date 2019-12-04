@@ -1,14 +1,14 @@
 <template>
   <div>
-    <b-row>
-      <b-col cols="6">
+    <b-row id="width100">
+      <b-col cols="5">
         <NewsScreen
           :country="country"
           @url-emitted="setLink"
           id="apply-width"
         ></NewsScreen>
       </b-col>
-      <b-col cols="6">
+      <b-col cols="7">
         <Map @country-selected="setCountry" @url-emitted="setLink"></Map>
         <PageView id="pageView" :providedLink="link"></PageView>
       </b-col>
@@ -60,5 +60,9 @@ export default {
 
 #apply-width {
   width: 90%;
+}
+
+#width100 {
+  width: 100%;
 }
 </style>
