@@ -113,7 +113,6 @@ export default {
     compCountry() {
       return getCode(this.country);
     },
-
     sessionExists() {
       return this.$session.exists();
     }
@@ -195,37 +194,36 @@ export default {
         });
       this.searchedLocation = this.country;
     },
-
-    deleteMessage(respId) {
-      let index = this.newsResponse.findIndex(x => x.id == respId);
-      this.newsResponse.splice(index, 1);
-    },
     emitURL(url) {
       this.$emit('url-emitted', url);
     },
     checkFavorites() {
-      axios({
-        method: 'post',
-        url: 'http://localhost:3000/user/checkFavorites',
-        data: {
-          email: this.$session.get('email'),
-          article: this.newsResponse
-        }
-      })
-        .then(res => {
-          this.favoriteCheck = res.data;
+      if (this.$session.exists()) {
+        axios({
+          method: 'post',
+          url: 'http://localhost:3000/user/checkFavorites',
+          data: {
+            email: this.$session.get('email'),
+            article: this.newsResponse
+          }
         })
-        .catch(err => {
-          this.infomsg = err;
-        });
+          .then(res => {
+            this.favoriteCheck = res.data;
+          })
+          .catch(err => {
+            this.infomsg = err;
+          });
+      }
     },
     compareToFavorites(response) {
-      for (let entry of this.favoriteCheck) {
-        if (entry && entry.articleTitle == response.result.title) {
-          return true;
+      if (this.$session.exists()) {
+        for (let entry of this.favoriteCheck) {
+          if (entry && entry.articleTitle == response.result.title) {
+            return true;
+          }
         }
+        return false;
       }
-      return false;
     },
     addToFavorites(result) {
       if (this.$session.exists()) {
