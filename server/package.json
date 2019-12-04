@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./bin/www | node ./node_modules/bunyan/bin/bunyan"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "body-parser": "~1.17.1",
+    "bunyan": "^1.8.12",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "express": "~4.15.2",
+    "express-session": "^1.15.6",
+    "mime": "^1.4.1",
+    "mysql2": "^1.4.2",
+    "sequelize": "^4.15.0"
+  },
+  "author": "",
+  "license": "ISC"
+}

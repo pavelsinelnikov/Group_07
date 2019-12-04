@@ -85,13 +85,9 @@ export default {
             this.history.push(JSON.parse(hist));
           }
 
-          console.log(this.history);
-
           for (let fav of res.data.article) {
             this.favorites.push(fav);
           }
-
-          console.log(this.favorites);
         } else {
           this.localmsg = 'Profile not found!';
         }

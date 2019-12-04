@@ -53,7 +53,7 @@ Our prototype will include:
 - ~~Implement User Account Creation~~
 - ~~Implement Authentication~~
 - ~~Implement Site View~~
-- Favoriting Article Implementation
+- ~~Favoriting Article Implementation~~
 
 ## Iteration 1 To Do List
 
@@ -98,9 +98,9 @@ Our prototype will include:
   - ~~Use Case~~
   - ~~Activity~~
   - ~~Domain Model (class)~~
-- Favoriting Article Implementation
-- Implement User Profile Page
-- User History
+- ~~Favoriting Article Implementation~~
+- ~~Implement User Profile Page~~
+- ~~User History~~
 
 ## Potential BTS630 Tasks
 
@@ -108,3 +108,5 @@ Our prototype will include:
 - Oauth capabilities
 - Coverting Google Map into SVG Map
 - Ranking of News Article Popularity
+- Restructuring database
+- Refactoring code
