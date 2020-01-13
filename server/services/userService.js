@@ -31,7 +31,7 @@ async function getOneByEmail(email) {
 }
 
 // Create a new user
-async function createUser(username, email, password) {
+async function createUser(username, email, country, password) {
   // Note: using `force: true` will drop the table if it already exists
   let user = await models.RegisteredUsers.findAll({
     limit: 1,
@@ -58,6 +58,7 @@ async function createUser(username, email, password) {
         models.RegisteredUsers.create({
           username: username,
           email: email,
+          country: country,
           password: hash
         });
       });

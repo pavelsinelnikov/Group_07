@@ -11,6 +11,7 @@ module.exports = config => {
       await user.createUser(
         req.body.username,
         req.body.email,
+        req.body.country,
         req.body.password
       );
       res.send(true);
@@ -142,7 +143,9 @@ module.exports = config => {
         if (email) {
           userData.email = email;
         }
-
+        if (country) {
+          userData.country = country;
+        }
         if (password) {
           userData.password = password;
         }

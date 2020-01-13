@@ -4,6 +4,7 @@
     <p>{{ localmsg }}</p>
     <h3>Username: {{ username }}</h3>
     <h3>Email: {{ email }}</h3>
+    <h3>Country: {{ country }}</h3>
     <b-row no-gutters>
       <b-col md="6">
         <h3>Favorites</h3>
@@ -58,6 +59,7 @@ export default {
       email: '',
       history: [],
       favorites: [],
+      country: '',
       localmsg: ''
     };
   },
@@ -80,7 +82,7 @@ export default {
         if (res.data) {
           this.username = res.data.oneUser.username;
           this.email = res.data.oneUser.email;
-
+          this.country = res.data.oneUser.country;
           for (let hist of res.data.oneUser.history) {
             this.history.push(JSON.parse(hist));
           }
