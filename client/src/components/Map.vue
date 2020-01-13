@@ -18,11 +18,13 @@
 
 <script>
 import { gmapApi } from 'vue2-google-maps';
+import axios from 'axios';
 
 export default {
   data() {
     return {
       map: null,
+      country: '',
       marker: {
         position: {
           lat: 56.1303673,
@@ -36,11 +38,28 @@ export default {
     google: gmapApi
   },
   mounted() {
+      axios({
+      method: 'get',
+      url: 'http://localhost:3000/user/profile',
+      params: {
+        email: this.$session.get('email')
+      },
+      responseType: 'json'
+    })
+      .then(res => {
+        if (res.data) {
+          this.country = res.data.oneUser.country;
+        }
+      })
+      .catch
+      //this.localmsg = err;
+      ();
+
     var that = this;
     that.$gmapApiPromiseLazy().then(() => {
       that.geocoder = new this.google.maps.Geocoder();
       that.$refs.mapRef.$mapPromise.then(map => {
-        that.$emit('country-selected', 'Canada');
+        that.$emit('country-selected', this.country);
         map.addListener('click', function(e) {
           that.marker.position = e.latLng;
           map.panTo(e.latLng);

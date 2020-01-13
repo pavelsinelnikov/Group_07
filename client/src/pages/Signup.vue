@@ -24,10 +24,10 @@
         ></b-form-input>     
           <b-form-select v-model="form.country">
             <option disabled value="">Select Country</option>
-            <option value="au">Australia</option>
-            <option value="br">Brazil</option>
-            <option value="ca">Canada</option>
-            <option value="us">United States</option>
+            <option>Australia</option>
+            <option>Brazil</option>
+            <option>Canada</option>
+            <option>United States</option>
           </b-form-select>
         <b-form-input
           class="form-signin"
