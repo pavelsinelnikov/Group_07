@@ -28,14 +28,14 @@
         <h3>History</h3>
         <div v-if="history.length > 0">
           <div id="articlelist">
-            <li v-for="article in history" :key="article.url">
+            <li v-for="article in history" :key="article.articleURL">
               <b-card
                 no-body
                 class="overflow-hidden"
                 style="max-width: 1000px;"
               >
-                <a :href="article.url">
-                  <b-card-body id="title" v-bind:title="article.title">
+                <a :href="article.articleURL">
+                  <b-card-body id="title" v-bind:title="article.articleTitle">
                   </b-card-body>
                 </a>
               </b-card>
@@ -72,7 +72,7 @@ export default {
       method: 'get',
       url: 'http://localhost:3000/user/profile',
       params: {
-        email: this.$session.get('email')
+        userId: this.$session.get('userId')
       },
       responseType: 'json'
     })
@@ -81,11 +81,15 @@ export default {
           this.username = res.data.oneUser.username;
           this.email = res.data.oneUser.email;
 
-          for (let hist of res.data.oneUser.history) {
-            this.history.push(JSON.parse(hist));
+          // for (let hist of res.data.oneUser.history) {
+          //   this.history.push(JSON.parse(hist));
+          // }
+
+          for (let hist of res.data.history) {
+            this.history.push(hist);
           }
 
-          for (let fav of res.data.article) {
+          for (let fav of res.data.favorites) {
             this.favorites.push(fav);
           }
         } else {

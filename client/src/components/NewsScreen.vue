@@ -38,35 +38,35 @@
     <div v-if="loadingStatus">
       <p>Loading...</p>
     </div>
-    <div v-else-if="newsIndex > 0">
+    <div v-else-if="newsResponse.length > 0">
       <div id="articlelist">
         <li v-for="response in newsResponse" :key="response.id">
           <b-card no-body class="overflow-hidden" style="max-width: 1000px;">
             <b-row no-gutters>
               <b-col md="6">
                 <b-card-img
-                  v-bind:src="response.result.urlToImage"
+                  v-bind:src="response.urlToImage"
                   class="rounded-0"
                 ></b-card-img>
               </b-col>
               <b-col md="6">
                 <b-checkbox
                   v-if="sessionExists"
-                  v-bind:title="response.result.title"
-                  :checked="compareToFavorites(response)"
-                  @change="addToFavorites(response.result)"
+                  v-bind:title="response.title"
+                  :checked="compareToFavorites(response.id)"
+                  @change="addToFavorites(response.id)"
                   >Favorite</b-checkbox
                 >
                 <a
                   href="#"
                   @click="
-                    emitURL(response.result.url);
-                    addToHistory(response.result);
+                    emitURL(response.url);
+                    addToHistory(response.id);
                   "
                 >
-                  <b-card-body id="title" v-bind:title="response.result.title">
+                  <b-card-body id="title" v-bind:title="response.title">
                     <b-card-text id="desc">
-                      {{ response.result.description }}
+                      {{ response.description }}
                     </b-card-text>
                   </b-card-body>
                 </a>
@@ -99,7 +99,6 @@ export default {
   data() {
     return {
       localmsg: '',
-      newsIndex: 0,
       hasSelected: false,
       newsResponse: [],
       searchedLocation: '',
@@ -126,7 +125,7 @@ export default {
     fetchDataFromNewsAPI() {
       this.loadingStatus = true;
       this.hasSelected = true;
-      this.newsIndex = 0;
+      this.newsIndex = 1;
       // Empty an array
       this.newsResponse = [];
       // Will only retrieve preset data
@@ -150,12 +149,13 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.loadingStatus = false;
-          let value = data.articles;
-          value.map(result => {
-            // TODO: Change id field to something better rather than a count
-            this.newsResponse.push({ id: this.newsIndex++, result: result });
-          });
-          this.checkFavorites();
+          this.newsResponse = data.articles;
+          this.addArticleData();
+          
+
+          // If there is a method for this, let me know
+          // adds a unique id to each of the news articles
+          
         });
       this.searchedLocation = this.country;
     },
@@ -186,11 +186,8 @@ export default {
         .then(response => response.json())
         .then(data => {
           this.loadingStatus = false;
-          let value = data.articles;
-          value.map(result => {
-            // TODO: Change id field to something better rather than a count
-            this.newsResponse.push({ id: this.newsIndex++, result: result });
-          });
+          this.newsResponse = data.articles;
+          this.addArticleData();
         });
       this.searchedLocation = this.country;
     },
@@ -203,8 +200,7 @@ export default {
           method: 'post',
           url: 'http://localhost:3000/user/checkFavorites',
           data: {
-            email: this.$session.get('email'),
-            article: this.newsResponse
+            userId: this.$session.get('userId')
           }
         })
           .then(res => {
@@ -215,25 +211,24 @@ export default {
           });
       }
     },
-    compareToFavorites(response) {
+    compareToFavorites(articleId) {
       if (this.$session.exists()) {
         for (let entry of this.favoriteCheck) {
-          if (entry && entry.articleTitle == response.result.title) {
+          if (entry && entry.ArticleId === articleId && entry.RegisteredUserId === this.$session.get('userId')) {
             return true;
           }
         }
         return false;
       }
     },
-    addToFavorites(result) {
+    addToFavorites(articleId) {
       if (this.$session.exists()) {
         axios({
           method: 'post',
-          url: 'http://localhost:3000/user/addToFavorites',
+          url: 'http://localhost:3000/user/favorites',
           data: {
-            email: this.$session.get('email'),
-            title: result.title,
-            url: result.url
+            userId: this.$session.get('userId'),
+            articleId: articleId
           }
         })
           .then(res => {
@@ -248,14 +243,14 @@ export default {
           });
       }
     },
-    addToHistory(result) {
+    addToHistory(articleId) {
       if (this.$session.exists()) {
         axios({
           method: 'POST',
-          url: 'http://localhost:3000/user/addToHistory',
+          url: 'http://localhost:3000/user/history',
           data: {
-            result: result,
-            email: this.$session.get('email')
+            userId: this.$session.get('userId'),
+            articleId: articleId
           }
         })
           .then(res => {
@@ -269,8 +264,34 @@ export default {
             this.infomsg = err;
           });
       }
+    },
+    addArticleData() {
+        axios({
+          method: 'POST',
+          url: 'http://localhost:3000/article/articles',
+          data: {
+            articles: this.newsResponse
+          }
+        })
+          .then(res => {
+          // adds a unique id to each of the news articles
+            for (let i=0; i < this.newsResponse.length; i++) {
+            this.newsResponse[i].id = res.data[i].id;
+          }
+          this.checkFavorites();
+            // if (res.data) {
+            //   this.infomsg = 'Articles successfully added!';
+              
+            // } else {
+            //   this.infomsg = 'Articles could not be added!';
+            //   return null
+            // }
+          })
+          .catch(err => {
+            this.infomsg = err;
+          });
+      }
     }
-  }
 };
 </script>
 

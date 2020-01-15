@@ -12,10 +12,6 @@
 
 ![](./Images/swimlane.jpg)
 
-## Domain Model
-
-![](./Images/class.jpg)
-
 # User Filter Selection Diagrams
 
 ## Activity Diagram
@@ -30,10 +26,6 @@
 ![](./Images/class-2.jpg)
 
 # User Creation/Authentication Diagrams
-
-## Class Diagram/Domain Model
-
-![](./Images/class.jpg)
 
 ## Domain Model
 
