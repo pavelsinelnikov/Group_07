@@ -124,6 +124,22 @@ module.exports = config => {
          // 'Please enter Username and Password!'
          res.send(false);
          res.end();
+
+         var userData = {};
+         if (username) {
+            userData.username = username;
+         }
+
+         if (email) {
+            userData.email = email;
+         }
+         if (country) {
+            userData.country = country;
+         }
+         if (password) {
+            userData.password = password;
+         }
+         await userService.updateUser(req.body.userId, userData);
       }
    });
 

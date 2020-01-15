@@ -39,8 +39,6 @@ async function createUser(username, email, password) {
       }
    });
 
-
-
    // If user does not exist
    if (count !== 0) {
       throw 'User already exists';

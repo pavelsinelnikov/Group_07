@@ -12,7 +12,6 @@ module.exports = config => {
          for (let art of req.body.articles) {
             ids.push(await article.createArticle(art.title, art.url));
          }
-         // OPTIMIZE THIS
          res.send(ids);
       } catch (err) {
          return res.send(err);

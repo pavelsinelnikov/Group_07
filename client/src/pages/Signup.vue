@@ -21,7 +21,14 @@
           type="email"
           required
           placeholder="Enter email"
-        ></b-form-input>
+        ></b-form-input>     
+          <b-form-select v-model="form.country">
+            <option disabled value="">Select Country</option>
+            <option>Australia</option>
+            <option>Brazil</option>
+            <option>Canada</option>
+            <option>United States</option>
+          </b-form-select>
         <b-form-input
           class="form-signin"
           id="input-2"
@@ -76,6 +83,7 @@ export default {
         data: {
           username: this.form.name,
           email: this.form.email,
+          country: this.form.country,
           password: this.form.password
         }
       })
