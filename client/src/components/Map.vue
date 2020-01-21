@@ -18,7 +18,7 @@
 
 <script>
 import { gmapApi } from 'vue2-google-maps';
-import axios from 'axios';
+//import axios from 'axios';
 
 export default {
   data() {
