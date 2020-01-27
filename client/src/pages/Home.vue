@@ -9,7 +9,8 @@
         ></NewsScreen>
       </b-col>
       <b-col cols="7">
-        <Map @country-selected="setCountry" @url-emitted="setLink"></Map>
+        <Map @country-selected="setCountry"/>
+        <!-- <Map @country-selected="setCountry" @url-emitted="setLink"></Map> -->
         <PageView id="pageView" :providedLink="link"></PageView>
       </b-col>
     </b-row>
@@ -18,7 +19,7 @@
 
 <script>
 import NewsScreen from '../components/NewsScreen';
-import Map from '../components/Map';
+import Map from '../components/OtherMap';
 import PageView from '../components/PageView';
 
 export default {

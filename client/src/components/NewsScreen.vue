@@ -30,7 +30,7 @@
         </b-row>
 
         <b-row id="selected-country">
-          <p>Selected country: {{ country }}</p>
+          <p>Selected country: {{ country.name }}</p>
         </b-row>
       </b-container>
     </form>
@@ -78,7 +78,7 @@
     </div>
     <div v-else-if="hasSelected">
       <p>
-        Sorry, no news for {{ searchedLocation }}, please select another
+        Sorry, no news for {{ country.name }}, please select another
         location or change the filters
       </p>
     </div>
@@ -92,7 +92,6 @@
 
 <script>
 import axios from 'axios';
-const { getCode } = require('country-list');
 
 export default {
   props: ['country'],
@@ -109,9 +108,9 @@ export default {
     };
   },
   computed: {
-    compCountry() {
-      return getCode(this.country);
-    },
+    // compCountry() {
+    //   return getCode(this.country);
+    // },
     sessionExists() {
       return this.$session.exists();
     }
@@ -135,7 +134,7 @@ export default {
         this.localmsg +
         '&' +
         'country=' +
-        this.compCountry +
+        this.country.code +
         '&' +
         'category=' +
         (this.category == 'all' ? '' : this.category) +
@@ -157,7 +156,7 @@ export default {
           // adds a unique id to each of the news articles
           
         });
-      this.searchedLocation = this.country;
+      //this.searchedLocation = this.country;
     },
     fetchCategoryFromNewsAPI() {
       this.loadingStatus = true;
@@ -175,7 +174,7 @@ export default {
         this.compCategory +
         '&' +
         'country=' +
-        this.compCountry +
+        this.country.code +
         '&' +
         'sortBy=popularity&' +
         // API Key will be given in a separate file not included in git
@@ -189,7 +188,7 @@ export default {
           this.newsResponse = data.articles;
           this.addArticleData();
         });
-      this.searchedLocation = this.country;
+      //this.searchedLocation = this.country;
     },
     emitURL(url) {
       this.$emit('url-emitted', url);

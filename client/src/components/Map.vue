@@ -13,13 +13,13 @@
 </template>
 
 <script>
-import { gmapApi } from "vue2-google-maps";
+//import { gmapApi } from "vue2-google-maps";
 import axios from "axios";
 export default {
   data() {
     return {
       map: null,
-      country: '',
+      country: "",
       marker: {
         position: {
           lat: 56.1303673,

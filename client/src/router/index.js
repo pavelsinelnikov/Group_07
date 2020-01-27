@@ -11,59 +11,58 @@ import Verification from '../pages/Verification';
 import NoAccess from '../pages/NoAccess';
 
 //import PageView from '../pages/PageView';
-//import OtherMap from '../pages/OtherMap';
+import OtherMap from '../pages/OtherMap';
 
 Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
-  routes: [
-    {
-      path: '/',
-      name: 'Home',
-      component: Home
-    },
-    {
-      path: '/contact',
-      name: 'Contact',
-      component: Contact
-    },
-    {
-      path: '/profile',
-      name: 'Profile',
-      component: Profile
-    },
-    {
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },
-    {
-      path: '/signup',
-      name: 'Signup',
-      component: Signup
-    },
-    {
-      path: '/verification',
-      name: 'verification',
-      component: Verification
-    },
-    {
-      path: '/noaccess',
-      name: 'NoAccess',
-      component: NoAccess
-    },
-    // {
-    //   path: '/pageview',
-    //   name: 'Page View',
-    //   component: PageView
-    // },
-    {
-      path: '*',
-      name: '404',
-      component: NotFound
-    }
-  ]
+   mode: 'history',
+   routes: [{
+         path: '/',
+         name: 'Home',
+         component: Home
+      },
+      {
+         path: '/contact',
+         name: 'Contact',
+         component: Contact
+      },
+      {
+         path: '/profile',
+         name: 'Profile',
+         component: Profile
+      },
+      {
+         path: '/login',
+         name: 'Login',
+         component: Login
+      },
+      {
+         path: '/signup',
+         name: 'Signup',
+         component: Signup
+      },
+      {
+         path: '/verification',
+         name: 'verification',
+         component: Verification
+      },
+      {
+         path: '/noaccess',
+         name: 'NoAccess',
+         component: NoAccess
+      },
+      {
+         path: '/map',
+         name: 'Page View',
+         component: OtherMap
+      },
+      {
+         path: '*',
+         name: '404',
+         component: NotFound
+      }
+   ]
 });
 
 // router.beforeEach((to, from, next) => {
