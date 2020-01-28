@@ -150,11 +150,11 @@ export default {
           this.loadingStatus = false;
           this.newsResponse = data.articles;
           this.addArticleData();
-          
+
 
           // If there is a method for this, let me know
           // adds a unique id to each of the news articles
-          
+
         });
       //this.searchedLocation = this.country;
     },
@@ -263,6 +263,17 @@ export default {
             this.infomsg = err;
           });
       }
+
+      axios({
+        method: 'POST',
+        url: 'http://localhost:3000/article/viewArticle',
+        data: {
+          articleId: articleId
+        }
+      })
+        .catch(err => {
+          this.infomsg = err;
+        });
     },
     addArticleData() {
         axios({
@@ -280,7 +291,7 @@ export default {
           this.checkFavorites();
             // if (res.data) {
             //   this.infomsg = 'Articles successfully added!';
-              
+
             // } else {
             //   this.infomsg = 'Articles could not be added!';
             //   return null
