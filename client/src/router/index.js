@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
 import Contact from '../pages/Contact';
+import Popular from '../pages/Popular'
 import Profile from '../pages/Profile';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
@@ -27,6 +28,11 @@ export default new Router({
       path: '/contact',
       name: 'Contact',
       component: Contact
+    },
+    {
+      path: '/popular',
+      name: 'Popular articles',
+      component: Popular
     },
     {
       path: '/profile',
