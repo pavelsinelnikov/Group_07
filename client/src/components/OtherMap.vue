@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4maps from '@amcharts/amcharts4/maps';
 import am4geodata_worldLow from '@amcharts/amcharts4-geodata/worldLow';
@@ -21,6 +22,7 @@ export default {
     };
   },
   mounted() {
+
     var that = this;
     // Create map instance
     let map = am4core.create(this.$refs.mapDiv, am4maps.MapChart);
@@ -44,6 +46,32 @@ export default {
     var polygonTemplate = polygonSeries.mapPolygons.template;
     polygonTemplate.tooltipText = '{name}';
     polygonTemplate.fill = am4core.color('#74B266');
+
+    //Set user country
+     axios({
+      method: 'get',
+      url: 'http://localhost:3000/user/profile',
+      params: {
+        userId: this.$session.get('userId')
+      },
+      responseType: 'json'
+    })
+      .then(res => {
+        if (res.data) {
+            that.$emit('country-selected',{
+            code:res.data.oneUser.country, name: res.data.oneUser.country});
+            //console.log(res.data.oneUser.country)
+        }
+      })
+      .catch
+      //this.localmsg = err;
+      ();
+
+
+
+
+
+
     polygonTemplate.events.on("hit", function(ev) {
 
  
@@ -51,7 +79,7 @@ export default {
   //that.$emit('url-emitted', '');
   that.$emit('country-selected',{
     code:ev.target.dataItem.dataContext.id, name: ev.target.dataItem.dataContext.name});
-  //console.log(ev.target.dataItem.dataContext.id);
+  //console.log(ev.target.dataItem.dataContext.name);
 });
 
     // Create hover state and set alternative fill color
