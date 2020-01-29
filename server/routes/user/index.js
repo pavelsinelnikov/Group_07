@@ -13,6 +13,7 @@ module.exports = config => {
          await user.createUser(
             req.body.username,
             req.body.email,
+            req.body.country,
             req.body.password
          );
          res.send(true);

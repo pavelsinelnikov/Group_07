@@ -24,10 +24,42 @@
         ></b-form-input>     
           <b-form-select v-model="form.country">
             <option disabled value="">Select Country</option>
-            <option>Australia</option>
-            <option>Brazil</option>
-            <option>Canada</option>
-            <option>United States</option>
+            <option  value="AE">United Arab Emirates</option>
+            <option value="AR">Argentina</option>
+            <option value="AT">Austria</option>
+            <option value="AU">Australia</option>
+            <option value="BE">Belgium</option>
+            <option value="BG">Bulgaria</option>
+            <option value="BR">Brazil</option>
+            <option value="CA">Canada</option>
+            <option value="CH">Switzerland</option>
+            <option value="CN">China</option>
+            <option value="CO">Colombia</option>
+            <option value="CU">Cuba</option>
+            <option value="CZ">Czech Republic</option>
+            <option value="DE">Denmark</option>
+            <option value="EG">Egypt</option>
+            <option value="FR">France</option>
+            <option value="GB">United Kingdom</option>
+            <option value="GR">Greece</option>
+            <option value="HK">Hong Kong</option>
+            <option value="HU">Hungary</option>
+            <option value="ID">Indonesia</option>
+            <option value="IL">Israel</option>
+            <option value="IN">India</option>
+            <option value="IT">Italy</option>
+            <option value="JP">Japan</option>
+            <option value="KR">Korea (South)</option>
+            <option value="LT">Lithuania</option>
+            <option value="LV">Latvia</option>
+            <option value="MA">Morocco</option>
+            <option value="MX">Mexico</option>
+            <option value="MY">Malaysia</option>
+            <option value="NG">Nigeria</option>
+            <option value="NL">Netherlands</option>
+            <option value="NO">Norway</option>
+            <option value="NZ">New Zealand</option>
+            <option value="US">United States</option>
           </b-form-select>
         <b-form-input
           class="form-signin"
