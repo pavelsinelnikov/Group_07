@@ -2,32 +2,28 @@
   <div>
     <b-row id="width100">
       <b-col cols="5">
-        <NewsScreen
-          :country="country"
-          @url-emitted="setLink"
-          id="apply-width"
-        ></NewsScreen>
+        <NewsScreen :country="country" @articleId-emitted="setArticleId" id="apply-width"></NewsScreen>
       </b-col>
       <b-col cols="7">
-        <Map @country-selected="setCountry"/>
+        <Map @country-selected="setCountry" />
         <!-- <Map @country-selected="setCountry" @url-emitted="setLink"></Map> -->
-        <PageView id="pageView" :providedLink="link"></PageView>
+        <PageView id="pageView" :articleId="articleId"></PageView>
       </b-col>
     </b-row>
   </div>
 </template>
 
 <script>
-import NewsScreen from '../components/NewsScreen';
-import Map from '../components/OtherMap';
-import PageView from '../components/PageView';
+import NewsScreen from "../components/NewsScreen";
+import Map from "../components/OtherMap";
+import PageView from "../components/PageView";
 
 export default {
-  name: 'home',
+  name: "home",
   data() {
     return {
-      country: '',
-      link: ''
+      country: "",
+      articleId: ""
     };
   },
   components: {
@@ -39,8 +35,8 @@ export default {
     setCountry(country) {
       this.country = country;
     },
-    setLink(link) {
-      this.link = link;
+    setArticleId(articleId) {
+      this.articleId = articleId;
     }
   }
 };
@@ -48,7 +44,7 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

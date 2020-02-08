@@ -17,7 +17,7 @@
         </b-row>
         <b-row>
           <b-form-select v-model="category" @change="fetchDataFromNewsAPI()">
-            <option disabled value="">Please select a category</option>
+            <option disabled value>Please select a category</option>
             <option>all</option>
             <option>business</option>
             <option>entertainment</option>
@@ -44,10 +44,7 @@
           <b-card no-body class="overflow-hidden" style="max-width: 1000px;">
             <b-row no-gutters>
               <b-col md="6">
-                <b-card-img
-                  v-bind:src="response.urlToImage"
-                  class="rounded-0"
-                ></b-card-img>
+                <b-card-img v-bind:src="response.urlToImage" class="rounded-0"></b-card-img>
               </b-col>
               <b-col md="6">
                 <b-checkbox
@@ -55,19 +52,16 @@
                   v-bind:title="response.title"
                   :checked="compareToFavorites(response.id)"
                   @change="addToFavorites(response.id)"
-                  >Favorite</b-checkbox
-                >
+                >Favorite</b-checkbox>
                 <a
                   href="#"
                   @click="
-                    emitURL(response.url);
+                    emitArticleId(response.id);
                     addToHistory(response.id);
                   "
                 >
                   <b-card-body id="title" v-bind:title="response.title">
-                    <b-card-text id="desc">
-                      {{ response.description }}
-                    </b-card-text>
+                    <b-card-text id="desc">{{ response.description }}</b-card-text>
                   </b-card-body>
                 </a>
               </b-col>
@@ -83,27 +77,25 @@
       </p>
     </div>
     <div v-else>
-      <p>
-        Click a country on the map
-      </p>
+      <p>Click a country on the map</p>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  props: ['country'],
+  props: ["country"],
   data() {
     return {
-      localmsg: '',
+      localmsg: "",
       hasSelected: false,
       newsResponse: [],
-      searchedLocation: '',
+      searchedLocation: "",
       loadingStatus: false,
-      category: 'all',
-      infomsg: '',
+      category: "all",
+      infomsg: "",
       favoriteCheck: []
     };
   },
@@ -129,20 +121,20 @@ export default {
       this.newsResponse = [];
       // Will only retrieve preset data
       var url =
-        'https://newsapi.org/v2/top-headlines?' +
-        'q=' +
+        "https://newsapi.org/v2/top-headlines?" +
+        "q=" +
         this.localmsg +
-        '&' +
-        'country=' +
+        "&" +
+        "country=" +
         this.country.code +
-        '&' +
-        'category=' +
-        (this.category == 'all' ? '' : this.category) +
-        '&' +
-        'sortBy=popularity&' +
+        "&" +
+        "category=" +
+        (this.category == "all" ? "" : this.category) +
+        "&" +
+        "sortBy=popularity&" +
         // API Key will be given in a separate file not included in git
         // I would suggest making your own one for now
-        'apiKey=' +
+        "apiKey=" +
         `${process.env.VUE_APP_NEWS_API}`;
       fetch(url)
         .then(response => response.json())
@@ -151,10 +143,8 @@ export default {
           this.newsResponse = data.articles;
           this.addArticleData();
 
-
           // If there is a method for this, let me know
           // adds a unique id to each of the news articles
-
         });
       //this.searchedLocation = this.country;
     },
@@ -166,20 +156,20 @@ export default {
       this.newsResponse = [];
       // Will only retrieve preset data
       var url =
-        'https://newsapi.org/v2/top-headlines?' +
-        'q=' +
+        "https://newsapi.org/v2/top-headlines?" +
+        "q=" +
         this.localmsg +
-        '&' +
-        'category=' +
+        "&" +
+        "category=" +
         this.compCategory +
-        '&' +
-        'country=' +
+        "&" +
+        "country=" +
         this.country.code +
-        '&' +
-        'sortBy=popularity&' +
+        "&" +
+        "sortBy=popularity&" +
         // API Key will be given in a separate file not included in git
         // I would suggest making your own one for now
-        'apiKey=' +
+        "apiKey=" +
         `${process.env.VUE_APP_NEWS_API}`;
       fetch(url)
         .then(response => response.json())
@@ -190,16 +180,16 @@ export default {
         });
       //this.searchedLocation = this.country;
     },
-    emitURL(url) {
-      this.$emit('url-emitted', url);
+    emitArticleId(articleId) {
+      this.$emit("articleId-emitted", articleId);
     },
     checkFavorites() {
       if (this.$session.exists()) {
         axios({
-          method: 'post',
-          url: 'http://localhost:3000/user/checkFavorites',
+          method: "post",
+          url: "http://localhost:3000/user/checkFavorites",
           data: {
-            userId: this.$session.get('userId')
+            userId: this.$session.get("userId")
           }
         })
           .then(res => {
@@ -213,7 +203,11 @@ export default {
     compareToFavorites(articleId) {
       if (this.$session.exists()) {
         for (let entry of this.favoriteCheck) {
-          if (entry && entry.ArticleId === articleId && entry.RegisteredUserId === this.$session.get('userId')) {
+          if (
+            entry &&
+            entry.ArticleId === articleId &&
+            entry.RegisteredUserId === this.$session.get("userId")
+          ) {
             return true;
           }
         }
@@ -223,18 +217,18 @@ export default {
     addToFavorites(articleId) {
       if (this.$session.exists()) {
         axios({
-          method: 'post',
-          url: 'http://localhost:3000/user/favorites',
+          method: "post",
+          url: "http://localhost:3000/user/favorites",
           data: {
-            userId: this.$session.get('userId'),
+            userId: this.$session.get("userId"),
             articleId: articleId
           }
         })
           .then(res => {
             if (res.data) {
-              this.infomsg = 'Favorite successfully added!';
+              this.infomsg = "Favorite successfully added!";
             } else {
-              this.infomsg = 'Favorite removed!';
+              this.infomsg = "Favorite removed!";
             }
           })
           .catch(err => {
@@ -245,18 +239,18 @@ export default {
     addToHistory(articleId) {
       if (this.$session.exists()) {
         axios({
-          method: 'POST',
-          url: 'http://localhost:3000/user/history',
+          method: "POST",
+          url: "http://localhost:3000/user/history",
           data: {
-            userId: this.$session.get('userId'),
+            userId: this.$session.get("userId"),
             articleId: articleId
           }
         })
           .then(res => {
             if (res.data) {
-              this.infomsg = 'History successfully added!';
+              this.infomsg = "History successfully added!";
             } else {
-              this.infomsg = 'History could not be added!';
+              this.infomsg = "History could not be added!";
             }
           })
           .catch(err => {
@@ -265,43 +259,42 @@ export default {
       }
 
       axios({
-        method: 'POST',
-        url: 'http://localhost:3000/article/viewArticle',
+        method: "POST",
+        url: "http://localhost:3000/article/viewArticle",
         data: {
           articleId: articleId
         }
-      })
-        .catch(err => {
-          this.infomsg = err;
-        });
+      }).catch(err => {
+        this.infomsg = err;
+      });
     },
     addArticleData() {
-        axios({
-          method: 'POST',
-          url: 'http://localhost:3000/article/articles',
-          data: {
-            articles: this.newsResponse
-          }
-        })
-          .then(res => {
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/article/articles",
+        data: {
+          articles: this.newsResponse
+        }
+      })
+        .then(res => {
           // adds a unique id to each of the news articles
-            for (let i=0; i < this.newsResponse.length; i++) {
+          for (let i = 0; i < this.newsResponse.length; i++) {
             this.newsResponse[i].id = res.data[i].id;
           }
           this.checkFavorites();
-            // if (res.data) {
-            //   this.infomsg = 'Articles successfully added!';
+          // if (res.data) {
+          //   this.infomsg = 'Articles successfully added!';
 
-            // } else {
-            //   this.infomsg = 'Articles could not be added!';
-            //   return null
-            // }
-          })
-          .catch(err => {
-            this.infomsg = err;
-          });
-      }
+          // } else {
+          //   this.infomsg = 'Articles could not be added!';
+          //   return null
+          // }
+        })
+        .catch(err => {
+          this.infomsg = err;
+        });
     }
+  }
 };
 </script>
 
@@ -314,7 +307,7 @@ export default {
 #title {
   font-weight: 700;
   font-size: 1.65em;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #000;
   text-decoration: none !important;
   text-align: left;
