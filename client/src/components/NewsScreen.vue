@@ -19,13 +19,13 @@
           <b-form-select v-model="category" @change="fetchDataFromNewsAPI()">
             <option disabled value>Please select a category</option>
             <option>all</option>
-            <option>business</option>
-            <option>entertainment</option>
-            <option>general</option>
-            <option>health</option>
-            <option>science</option>
-            <option>sports</option>
-            <option>technology</option>
+            <option value="news/Business">Business</option>
+            <option value="news/Arts_and_Entertainment">Arts and Entertainment</option>
+            <option value="news/Health">Health</option>
+            <option value="news/Politics">Politics</option>
+            <option value="news/Science">Science</option>
+            <option value="news/Sports">Sports</option>
+            <option value="news/Technology">Technology</option>
           </b-form-select>
         </b-row>
 
@@ -44,7 +44,7 @@
           <b-card no-body class="overflow-hidden" style="max-width: 1000px;">
             <b-row no-gutters>
               <b-col md="6">
-                <b-card-img v-bind:src="response.urlToImage" class="rounded-0"></b-card-img>
+                <b-card-img v-bind:src="response.image" class="rounded-0"></b-card-img>
               </b-col>
               <b-col md="6">
                 <b-checkbox
@@ -61,7 +61,7 @@
                   "
                 >
                   <b-card-body id="title" v-bind:title="response.title">
-                    <b-card-text id="desc">{{ response.description }}</b-card-text>
+                    <b-card-text id="desc">{{ response.body }}</b-card-text>
                   </b-card-body>
                 </a>
               </b-col>
@@ -120,63 +120,26 @@ export default {
       // Empty an array
       this.newsResponse = [];
       // Will only retrieve preset data
+      this.fcountry = this.country.name.replace(/ /g,"_");
       var url =
-        "https://newsapi.org/v2/top-headlines?" +
-        "q=" +
+        "http://eventregistry.org/api/v1/article/getArticles?" +
+        "locationUri=http://en.wikipedia.org/wiki/" +
+          this.fcountry +
+        (this.category == "all" ? "" : "&categoryUri=" + this.category) +
+        "&keyword=" +
         this.localmsg +
-        "&" +
-        "country=" +
-        this.country.code +
-        "&" +
-        "category=" +
-        (this.category == "all" ? "" : this.category) +
-        "&" +
-        "sortBy=popularity&" +
-        // API Key will be given in a separate file not included in git
-        // I would suggest making your own one for now
-        "apiKey=" +
+        "&keywordLoc=title" +
+        "&lang=eng&articleBodyLen=200&articlesCount=50&isDuplicateFilter=skipDuplicates&hasDuplicateFilter=skipHasDuplicates&apiKey=" +
         `${process.env.VUE_APP_NEWS_API}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {
           this.loadingStatus = false;
-          this.newsResponse = data.articles;
+          this.newsResponse = data.articles.results;
           this.addArticleData();
 
           // If there is a method for this, let me know
           // adds a unique id to each of the news articles
-        });
-      //this.searchedLocation = this.country;
-    },
-    fetchCategoryFromNewsAPI() {
-      this.loadingStatus = true;
-      this.hasSelected = true;
-      this.newsIndex = 0;
-      // Empty an array
-      this.newsResponse = [];
-      // Will only retrieve preset data
-      var url =
-        "https://newsapi.org/v2/top-headlines?" +
-        "q=" +
-        this.localmsg +
-        "&" +
-        "category=" +
-        this.compCategory +
-        "&" +
-        "country=" +
-        this.country.code +
-        "&" +
-        "sortBy=popularity&" +
-        // API Key will be given in a separate file not included in git
-        // I would suggest making your own one for now
-        "apiKey=" +
-        `${process.env.VUE_APP_NEWS_API}`;
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          this.loadingStatus = false;
-          this.newsResponse = data.articles;
-          this.addArticleData();
         });
       //this.searchedLocation = this.country;
     },
@@ -313,6 +276,11 @@ export default {
   text-align: left;
 }
 #desc {
+  /* overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical; */
   font-weight: 100;
   font-size: 0.65em;
 }
