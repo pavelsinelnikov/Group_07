@@ -28,6 +28,37 @@ module.exports = config => {
      }
    });
 
+   router.post('/checkLink', async (req, res) => {
+      var request = require('request');
+
+      request(req.body.url, function(err, response) {
+        var isBlocked = 'No';
+
+        // If the page was found...
+        if (!err && response.statusCode == 200) {
+
+         // Grab the headers
+         var headers = response.headers;
+
+         // Grab the x-frame-options header if it exists
+         var xFrameOptions = headers['x-frame-options'] || '';
+
+         // Normalize the header to lowercase
+         xFrameOptions = xFrameOptions.toLowerCase();
+         // Check if it's set to a blocking option
+         if (
+           xFrameOptions === 'sameorigin' ||
+           xFrameOptions === 'deny'
+         ) {
+           isBlocked = 'Yes';
+         }
+        }
+
+        res.send(isBlocked);
+      });
+
+   });
+
     router.get('/popular', async (req, res, next) => {
        try {
           var favorites = [];

@@ -16,6 +16,7 @@
     "express-session": "^1.15.6",
     "mime": "^1.4.1",
     "mysql2": "^1.4.2",
+    "request": "^2.88.2",
     "semistandard": "^14.2.0",
     "sequelize": "^4.15.0"
   },
