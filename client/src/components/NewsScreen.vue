@@ -122,7 +122,7 @@ export default {
       // Will only retrieve preset data
       this.fcountry = this.country.name.replace(/ /g,"_");
       var url =
-        "http://eventregistry.org/api/v1/article/getArticles?" +
+        "https://eventregistry.org/api/v1/article/getArticles?" +
         "locationUri=http://en.wikipedia.org/wiki/" +
           this.fcountry +
         (this.category == "all" ? "" : "&categoryUri=" + this.category) +

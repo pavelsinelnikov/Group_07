@@ -70,7 +70,13 @@ async function getComments(articleId) {
   return models.Comments.findAll({
     where: {
       ArticleId: articleId
-    }
+    },
+    include: [
+      {
+        model: models.RegisteredUsers,
+        required: true
+      }
+    ]
   });
 }
 
