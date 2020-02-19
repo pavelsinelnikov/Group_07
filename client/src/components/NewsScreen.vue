@@ -17,15 +17,15 @@
         </b-row>
         <b-row>
           <b-form-select v-model="category" @change="fetchDataFromNewsAPI()">
-            <option disabled value="">Please select a category</option>
+            <option disabled value>Please select a category</option>
             <option>all</option>
-            <option>business</option>
-            <option>entertainment</option>
-            <option>general</option>
-            <option>health</option>
-            <option>science</option>
-            <option>sports</option>
-            <option>technology</option>
+            <option value="news/Business">Business</option>
+            <option value="news/Arts_and_Entertainment">Arts and Entertainment</option>
+            <option value="news/Health">Health</option>
+            <option value="news/Politics">Politics</option>
+            <option value="news/Science">Science</option>
+            <option value="news/Sports">Sports</option>
+            <option value="news/Technology">Technology</option>
           </b-form-select>
         </b-row>
 
@@ -44,10 +44,7 @@
           <b-card no-body class="overflow-hidden" style="max-width: 1000px;">
             <b-row no-gutters>
               <b-col md="6">
-                <b-card-img
-                  v-bind:src="response.urlToImage"
-                  class="rounded-0"
-                ></b-card-img>
+                <b-card-img v-bind:src="response.image" class="rounded-0"></b-card-img>
               </b-col>
               <b-col md="6">
                 <b-checkbox
@@ -55,19 +52,16 @@
                   v-bind:title="response.title"
                   :checked="compareToFavorites(response.id)"
                   @change="addToFavorites(response.id)"
-                  >Favorite</b-checkbox
-                >
+                >Favorite</b-checkbox>
                 <a
                   href="#"
                   @click="
-                    emitURL(response.url);
+                    emitArticleId(response.id);
                     addToHistory(response.id);
                   "
                 >
                   <b-card-body id="title" v-bind:title="response.title">
-                    <b-card-text id="desc">
-                      {{ response.description }}
-                    </b-card-text>
+                    <b-card-text id="desc">{{ response.body }}</b-card-text>
                   </b-card-body>
                 </a>
               </b-col>
@@ -83,27 +77,25 @@
       </p>
     </div>
     <div v-else>
-      <p>
-        Click a country on the map
-      </p>
+      <p>Click a country on the map</p>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 
 export default {
-  props: ['country'],
+  props: ["country"],
   data() {
     return {
-      localmsg: '',
+      localmsg: "",
       hasSelected: false,
       newsResponse: [],
-      searchedLocation: '',
+      searchedLocation: "",
       loadingStatus: false,
-      category: 'all',
-      infomsg: '',
+      category: "all",
+      infomsg: "",
       favoriteCheck: []
     };
   },
@@ -128,78 +120,39 @@ export default {
       // Empty an array
       this.newsResponse = [];
       // Will only retrieve preset data
+      this.fcountry = this.country.name.replace(/ /g,"_");
       var url =
-        'https://newsapi.org/v2/top-headlines?' +
-        'q=' +
+        "https://eventregistry.org/api/v1/article/getArticles?" +
+        "locationUri=http://en.wikipedia.org/wiki/" +
+          this.fcountry +
+        (this.category == "all" ? "" : "&categoryUri=" + this.category) +
+        "&keyword=" +
         this.localmsg +
-        '&' +
-        'country=' +
-        this.country.code +
-        '&' +
-        'category=' +
-        (this.category == 'all' ? '' : this.category) +
-        '&' +
-        'sortBy=popularity&' +
-        // API Key will be given in a separate file not included in git
-        // I would suggest making your own one for now
-        'apiKey=' +
+        "&keywordLoc=title" +
+        "&lang=eng&articleBodyLen=200&articlesCount=50&isDuplicateFilter=skipDuplicates&hasDuplicateFilter=skipHasDuplicates&apiKey=" +
         `${process.env.VUE_APP_NEWS_API}`;
       fetch(url)
         .then(response => response.json())
         .then(data => {
           this.loadingStatus = false;
-          this.newsResponse = data.articles;
+          this.newsResponse = data.articles.results;
           this.addArticleData();
-
 
           // If there is a method for this, let me know
           // adds a unique id to each of the news articles
-
         });
       //this.searchedLocation = this.country;
     },
-    fetchCategoryFromNewsAPI() {
-      this.loadingStatus = true;
-      this.hasSelected = true;
-      this.newsIndex = 0;
-      // Empty an array
-      this.newsResponse = [];
-      // Will only retrieve preset data
-      var url =
-        'https://newsapi.org/v2/top-headlines?' +
-        'q=' +
-        this.localmsg +
-        '&' +
-        'category=' +
-        this.compCategory +
-        '&' +
-        'country=' +
-        this.country.code +
-        '&' +
-        'sortBy=popularity&' +
-        // API Key will be given in a separate file not included in git
-        // I would suggest making your own one for now
-        'apiKey=' +
-        `${process.env.VUE_APP_NEWS_API}`;
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          this.loadingStatus = false;
-          this.newsResponse = data.articles;
-          this.addArticleData();
-        });
-      //this.searchedLocation = this.country;
-    },
-    emitURL(url) {
-      this.$emit('url-emitted', url);
+    emitArticleId(articleId) {
+      this.$emit("articleId-emitted", articleId);
     },
     checkFavorites() {
       if (this.$session.exists()) {
         axios({
-          method: 'post',
-          url: 'http://localhost:3000/user/checkFavorites',
+          method: "post",
+          url: "http://localhost:3000/user/checkFavorites",
           data: {
-            userId: this.$session.get('userId')
+            userId: this.$session.get("userId")
           }
         })
           .then(res => {
@@ -213,7 +166,11 @@ export default {
     compareToFavorites(articleId) {
       if (this.$session.exists()) {
         for (let entry of this.favoriteCheck) {
-          if (entry && entry.ArticleId === articleId && entry.RegisteredUserId === this.$session.get('userId')) {
+          if (
+            entry &&
+            entry.ArticleId === articleId &&
+            entry.RegisteredUserId === this.$session.get("userId")
+          ) {
             return true;
           }
         }
@@ -223,18 +180,18 @@ export default {
     addToFavorites(articleId) {
       if (this.$session.exists()) {
         axios({
-          method: 'post',
-          url: 'http://localhost:3000/user/favorites',
+          method: "post",
+          url: "http://localhost:3000/user/favorites",
           data: {
-            userId: this.$session.get('userId'),
+            userId: this.$session.get("userId"),
             articleId: articleId
           }
         })
           .then(res => {
             if (res.data) {
-              this.infomsg = 'Favorite successfully added!';
+              this.infomsg = "Favorite successfully added!";
             } else {
-              this.infomsg = 'Favorite removed!';
+              this.infomsg = "Favorite removed!";
             }
           })
           .catch(err => {
@@ -245,18 +202,18 @@ export default {
     addToHistory(articleId) {
       if (this.$session.exists()) {
         axios({
-          method: 'POST',
-          url: 'http://localhost:3000/user/history',
+          method: "POST",
+          url: "http://localhost:3000/user/history",
           data: {
-            userId: this.$session.get('userId'),
+            userId: this.$session.get("userId"),
             articleId: articleId
           }
         })
           .then(res => {
             if (res.data) {
-              this.infomsg = 'History successfully added!';
+              this.infomsg = "History successfully added!";
             } else {
-              this.infomsg = 'History could not be added!';
+              this.infomsg = "History could not be added!";
             }
           })
           .catch(err => {
@@ -265,43 +222,42 @@ export default {
       }
 
       axios({
-        method: 'POST',
-        url: 'http://localhost:3000/article/viewArticle',
+        method: "POST",
+        url: "http://localhost:3000/article/viewArticle",
         data: {
           articleId: articleId
         }
-      })
-        .catch(err => {
-          this.infomsg = err;
-        });
+      }).catch(err => {
+        this.infomsg = err;
+      });
     },
     addArticleData() {
-        axios({
-          method: 'POST',
-          url: 'http://localhost:3000/article/articles',
-          data: {
-            articles: this.newsResponse
-          }
-        })
-          .then(res => {
+      axios({
+        method: "POST",
+        url: "http://localhost:3000/article/articles",
+        data: {
+          articles: this.newsResponse
+        }
+      })
+        .then(res => {
           // adds a unique id to each of the news articles
-            for (let i=0; i < this.newsResponse.length; i++) {
+          for (let i = 0; i < this.newsResponse.length; i++) {
             this.newsResponse[i].id = res.data[i].id;
           }
           this.checkFavorites();
-            // if (res.data) {
-            //   this.infomsg = 'Articles successfully added!';
+          // if (res.data) {
+          //   this.infomsg = 'Articles successfully added!';
 
-            // } else {
-            //   this.infomsg = 'Articles could not be added!';
-            //   return null
-            // }
-          })
-          .catch(err => {
-            this.infomsg = err;
-          });
-      }
+          // } else {
+          //   this.infomsg = 'Articles could not be added!';
+          //   return null
+          // }
+        })
+        .catch(err => {
+          this.infomsg = err;
+        });
     }
+  }
 };
 </script>
 
@@ -314,12 +270,17 @@ export default {
 #title {
   font-weight: 700;
   font-size: 1.65em;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #000;
   text-decoration: none !important;
   text-align: left;
 }
 #desc {
+  /* overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical; */
   font-weight: 100;
   font-size: 0.65em;
 }

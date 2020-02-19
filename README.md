@@ -1,3 +1,8 @@
+<p align="center">
+    <img width="200" height="200" src="./client/src/assets/logo.png">
+</p>
+
+
 # Group_07
 
 - Pavel Sinelnikov
@@ -110,3 +115,14 @@ Our prototype will include:
 - Ranking of News Article Popularity
 - Restructuring database
 - Refactoring code
+
+## Potential Next Tasks
+
+- Iframe not loading with article data
+- Voting system likes/dislikes
+- Comment section - Pavel
+- Overlay of article
+- Local news for country instead of local country interpretation of world news
+
+
+
