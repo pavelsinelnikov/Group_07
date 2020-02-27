@@ -30,7 +30,12 @@
         </b-row>
 
         <b-row id="selected-country">
-          <p>Selected country: {{ country.name }}</p>
+          <b-col>
+            <p>Selected country: {{ this.countryList.toString() }}</p>
+          </b-col>
+          <b-col sm="2">
+            <b-button @click="clearDataFromNewsAPI()">Clear</b-button>
+          </b-col>
         </b-row>
       </b-container>
     </form>
@@ -96,7 +101,9 @@ export default {
       loadingStatus: false,
       category: "all",
       infomsg: "",
-      favoriteCheck: []
+      fcountry: "",
+      favoriteCheck: [],
+      countryList: []
     };
   },
   computed: {
@@ -113,34 +120,51 @@ export default {
     }
   },
   methods: {
-    fetchDataFromNewsAPI() {
-      this.loadingStatus = true;
-      this.hasSelected = true;
-      this.newsIndex = 1;
-      // Empty an array
+    clearDataFromNewsAPI() {
       this.newsResponse = [];
-      // Will only retrieve preset data
-      this.fcountry = this.country.name.replace(/ /g,"_");
-      var url =
-        "https://eventregistry.org/api/v1/article/getArticles?" +
-        "locationUri=http://en.wikipedia.org/wiki/" +
-          this.fcountry +
-        (this.category == "all" ? "" : "&categoryUri=" + this.category) +
-        "&keyword=" +
-        this.localmsg +
-        "&keywordLoc=title" +
-        "&lang=eng&articleBodyLen=200&articlesCount=50&isDuplicateFilter=skipDuplicates&hasDuplicateFilter=skipHasDuplicates&apiKey=" +
-        `${process.env.VUE_APP_NEWS_API}`;
-      fetch(url)
-        .then(response => response.json())
-        .then(data => {
-          this.loadingStatus = false;
-          this.newsResponse = data.articles.results;
-          this.addArticleData();
+      this.countryList = [];
+      this.hasSelected = false;
+      this.infomsg = "";
+    },
+    fetchDataFromNewsAPI() {
+      if (!(this.countryList.indexOf(this.country.name) > -1)) {
+        this.fcountry = this.country.name.replace(/ /g, "_");
+        this.loadingStatus = true;
+        this.hasSelected = true;
+        this.newsIndex = 1;
+        this.infomsg = "";
 
-          // If there is a method for this, let me know
-          // adds a unique id to each of the news articles
-        });
+        this.countryList.push(this.country.name);
+        // Empty an array
+        // this.newsResponse = [];
+        // Will only retrieve preset data
+        var url =
+          "https://eventregistry.org/api/v1/article/getArticles?" +
+          "locationUri=http://en.wikipedia.org/wiki/" +
+          this.fcountry +
+          (this.category == "all" ? "" : "&categoryUri=" + this.category) +
+          "&keyword=" +
+          this.localmsg +
+          "&keywordLoc=title" +
+          "&lang=eng&articleBodyLen=200&articlesCount=50&isDuplicateFilter=skipDuplicates&hasDuplicateFilter=skipHasDuplicates&apiKey=" +
+          `${process.env.VUE_APP_NEWS_API}`;
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {
+            this.loadingStatus = false;
+            this.newsResponse = this.newsResponse.concat(data.articles.results);
+            this.addArticleData();
+
+            // If there is a method for this, let me know
+            // adds a unique id to each of the news articles
+          });
+      } else {
+        this.infomsg = this.country.name + " has already been selected!";
+        // Deselecting specific countries in future update
+        //this.countryList = this.countryList.filter(
+        //   e => e !== this.country.name
+        // );
+      }
       //this.searchedLocation = this.country;
     },
     emitArticleId(articleId) {
