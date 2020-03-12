@@ -33,9 +33,9 @@
           <b-col>
             <p>Selected country: {{ this.countryList.toString() }}</p>
           </b-col>
-          <b-col sm="2">
+          <!-- <b-col sm="2">
             <b-button @click="clearDataFromNewsAPI()">Clear</b-button>
-          </b-col>
+          </b-col> -->
         </b-row>
       </b-container>
     </form>
@@ -103,7 +103,8 @@ export default {
       infomsg: "",
       fcountry: "",
       favoriteCheck: [],
-      countryList: []
+      countryList: [],
+      counter: 0
     };
   },
   computed: {
@@ -125,15 +126,16 @@ export default {
       this.countryList = [];
       this.hasSelected = false;
       this.infomsg = "";
+      this.counter = 0;
     },
     fetchDataFromNewsAPI() {
       if (!(this.countryList.indexOf(this.country.name) > -1)) {
         this.fcountry = this.country.name.replace(/ /g, "_");
         this.loadingStatus = true;
         this.hasSelected = true;
-        this.newsIndex = 1;
+        this.newsIndex++;
         this.infomsg = "";
-
+        this.counter++;
         this.countryList.push(this.country.name);
         // Empty an array
         // this.newsResponse = [];
@@ -146,24 +148,31 @@ export default {
           "&keyword=" +
           this.localmsg +
           "&keywordLoc=title" +
-          "&lang=eng&articleBodyLen=200&articlesCount=50&isDuplicateFilter=skipDuplicates&hasDuplicateFilter=skipHasDuplicates&apiKey=" +
+          "&lang=eng&includeArticleLocation=true&articleBodyLen=200&articlesCount=15&isDuplicateFilter=skipDuplicates&hasDuplicateFilter=skipHasDuplicates&apiKey=" +
           `${process.env.VUE_APP_NEWS_API}`;
         fetch(url)
           .then(response => response.json())
           .then(data => {
             this.loadingStatus = false;
-            this.newsResponse = this.newsResponse.concat(data.articles.results);
-            this.addArticleData();
-
+              this.newsResponse = this.newsResponse.concat(data.articles.results);
+              this.addArticleData();
             // If there is a method for this, let me know
             // adds a unique id to each of the news articles
           });
       } else {
-        this.infomsg = this.country.name + " has already been selected!";
+        this.counter--;
+        if (this.counter == 0){
+          this.hasSelected = false;
+        }
         // Deselecting specific countries in future update
-        //this.countryList = this.countryList.filter(
-        //   e => e !== this.country.name
-        // );
+        this.countryList = this .countryList.filter(
+           e => e != this.country.name
+        );
+        this.newsResponse = this.newsResponse.filter(obj => {
+          if(obj.location.type == "country"){
+            return obj.location.label.eng != this.country.name;
+          }
+        });        
       }
       //this.searchedLocation = this.country;
     },
