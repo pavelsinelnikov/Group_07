@@ -35,7 +35,7 @@
           </b-col>
           <!-- <b-col sm="2">
             <b-button @click="clearDataFromNewsAPI()">Clear</b-button>
-          </b-col> -->
+          </b-col>-->
         </b-row>
       </b-container>
     </form>
@@ -154,25 +154,22 @@ export default {
           .then(response => response.json())
           .then(data => {
             this.loadingStatus = false;
-              this.newsResponse = this.newsResponse.concat(data.articles.results);
-              this.addArticleData();
-            // If there is a method for this, let me know
             // adds a unique id to each of the news articles
+            this.newsResponse = this.newsResponse.concat(data.articles.results);
+            this.addArticleData();
           });
       } else {
         this.counter--;
-        if (this.counter == 0){
+        if (this.counter == 0) {
           this.hasSelected = false;
         }
         // Deselecting specific countries in future update
-        this.countryList = this .countryList.filter(
-           e => e != this.country.name
-        );
+        this.countryList = this.countryList.filter(e => e != this.country.name);
         this.newsResponse = this.newsResponse.filter(obj => {
-          if(obj.location.type == "country"){
+          if (obj.location.type == "country") {
             return obj.location.label.eng != this.country.name;
           }
-        });        
+        });
       }
       //this.searchedLocation = this.country;
     },
