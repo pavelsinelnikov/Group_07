@@ -80,6 +80,7 @@
     <div v-else>
       <p>Loading...</p>
     </div>
+    <p>{{ text }}</p>
   </div>
 </template>
 
@@ -222,15 +223,11 @@ export default {
 
     getArticle() {
       //const nightmare = Nightmare();
-      this.loading = true;
-      let url = 'http://localhost:3000/article/articles/' + this.articleId;
-      axios({
-        headers: {
-          'Access-Control-Allow-Origin': '*'
-        },
-        method: 'GET',
-        url: url
-      })
+      
+      if (this.articleId != null) {
+        this.loading = true;
+         let url = 'http://localhost:3000/article/articles/' + this.articleId;
+      axios.get(url)
         .then(res => {
           var text;
           var checkTitle = '';
@@ -282,6 +279,8 @@ export default {
           this.infomsg = err;
           this.loading = false;
         });
+      }
+     
     },
 
     toggleEditState(text) {
