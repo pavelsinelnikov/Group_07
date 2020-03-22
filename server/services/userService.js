@@ -225,6 +225,19 @@ async function getUserHistory(userId) {
   });
 }
 
+async function updateAvatar(id, file) {
+  models.RegisteredUsers.update(
+    { avatar: file },
+    {
+      where: {
+        id: id
+      }
+    }
+  ).then(() => {
+    console.log('Done');
+  });
+}
+
 module.exports = _client => {
   models = Models(_client);
   client = _client;
@@ -243,6 +256,7 @@ module.exports = _client => {
     toggleFavorite,
     getUserFavorites,
     getUserHistory,
-    getUser
+    getUser,
+    updateAvatar
   };
 };

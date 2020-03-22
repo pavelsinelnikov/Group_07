@@ -5,6 +5,7 @@
     <h3>Username: {{ username }}</h3>
     <h3>Email: {{ email }}</h3>
     <h3>Country: {{ country }}</h3>
+    <input type="file" accept="image/*" @change="uploadImage($event)">
     <b-row no-gutters>
       <b-col md="6">
         <h3>Favorites</h3>
@@ -99,6 +100,19 @@ export default {
       .catch
       //this.localmsg = err;
       ();
+  },
+  methods: {
+    uploadImage(event) {
+      let data = new FormData();
+      data.append('userId', this.$session.get('userId'));
+      data.append('name', 'avatar');
+      data.append('avatar', event.target.files[0]);
+
+      axios.post(
+        'http://localhost:3000/user/upload',
+        data
+      )
+    }
   }
 };
 </script>
