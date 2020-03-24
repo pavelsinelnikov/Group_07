@@ -13,13 +13,14 @@
         </div>
       </div>
       <div v-else ref="linkDiv">
-        <a :href="article.articleURL">Article Link</a>
+        <a :href="article.articleURL">Sorry, we cannot display this article. Click here to view from its source.</a>
       </div>
       <div>
         <h3>Comments</h3>
         <ul v-for="comment in comments" :key="comment.id">
           <li v-if="userId === comment.RegisteredUserId">
             <div v-if="!editState">
+              <img class='avatar' :src="'http://localhost:3000/user/avatar/'+comment.id" />
               <p>
                 {{ comment.RegisteredUser.username }} {{ comment.updatedAt }}
                 {{ comment.text }}
@@ -42,6 +43,7 @@
               </p>
             </div>
             <div v-else-if="editState && currentComment.id === comment.id">
+              <img class='avatar' :src="'http://localhost:3000/user/avatar/'+comment.id" />
               <p>
                 {{ comment.RegisteredUser.username }} {{ comment.updatedAt }}
                 <input v-model="currentComment.text" />
@@ -65,6 +67,7 @@
             </div>
           </li>
           <li v-else>
+            <img class='avatar' :src="'http://localhost:3000/user/avatar/'+comment.id" />
             {{ comment.RegisteredUser.username }} {{ comment.updatedAt }}
             {{ comment.text }}
           </li>
@@ -223,7 +226,7 @@ export default {
 
     getArticle() {
       //const nightmare = Nightmare();
-      
+
       if (this.articleId != null) {
         this.loading = true;
          let url = 'http://localhost:3000/article/articles/' + this.articleId;
@@ -280,7 +283,7 @@ export default {
           this.loading = false;
         });
       }
-     
+
     },
 
     toggleEditState(text) {
@@ -300,6 +303,11 @@ export default {
 li {
   list-style: none;
   text-align: left;
+}
+
+.avatar {
+  height: 50px;
+  weight: 50px;
 }
 
 .body {
