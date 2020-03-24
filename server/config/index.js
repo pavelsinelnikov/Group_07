@@ -9,10 +9,10 @@ module.exports = {
       options: {
          host: 'localhost',
          port: 3306,
-         database: 'sys',
+         database: 'Group07',
          dialect: 'mysql',
          username: 'root',
-         password: 'PASSWORD',
+         password: 'mypassword',
          operatorsAliases: false
       }
    }
