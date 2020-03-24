@@ -8,8 +8,8 @@ async function getOne(commentId) {
   return await models.Comments.findOne({
     where: {
       id: commentId
-    },
-    include: [RegisteredUsers]
+    }//,
+    //include: [RegisteredUsers]
   });
 }
 

@@ -2,6 +2,18 @@ const express = require('express');
 const userService = require('../../services/userService');
 const articleService = require('../../services/articleService');
 const commentService = require('../../services/commentService');
+const multer = require('multer');
+
+var storage = multer.diskStorage(
+    {
+        destination: './uploads/images',
+        filename: function ( req, file, cb ) {
+            cb( null, file.originalname);
+        }
+    }
+);
+
+const upload = multer({storage: storage});
 
 module.exports = config => {
   const router = express.Router();
@@ -93,6 +105,27 @@ module.exports = config => {
         history,
         favorites
       });
+    } catch (err) {
+      return next(err);
+    }
+  });
+
+  router.post('/upload', upload.single('avatar'), async (req, res, next) => {
+    try {
+      await user.updateAvatar(req.body.userId, req.file.filename);
+    } catch (err) {
+      return next(err);
+    }
+  });
+
+  router.get('/avatar/:id', async (req, res, next) => {
+    try {
+      var com = await comment.getOne(req.params.id);
+      var account = await user.getUser(com.dataValues.RegisteredUserId);
+      if (account.dataValues.avatar == null){
+        account.dataValues.avatar = 'user.png';
+      }
+      res.type('png').sendFile('uploads/images/'+account.dataValues.avatar , { root : './'});
     } catch (err) {
       return next(err);
     }
