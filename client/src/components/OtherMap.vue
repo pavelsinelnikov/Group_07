@@ -33,18 +33,30 @@ export default {
     // Set projection
     map.projection = new am4maps.projections.Miller();
 
+    // The rest of the world.
+    var notFound = map.series.push(new am4maps.MapPolygonSeries());
+    var notFoundName = "world";
+    notFound.name = notFoundName;
+    notFound.useGeodata = true;
+    notFound.fillOpacity = 0.8;
+    notFound.mapPolygons.template.nonScalingStroke = true;
+    
     // Create map polygon series
     var polygonSeries = map.series.push(new am4maps.MapPolygonSeries());
+    
+    //Exclude countries
+    polygonSeries.exclude= ["CF", "AQ", "CD"];
 
     // Make map load polygon (like country names) data from GeoJSON
     polygonSeries.useGeodata = true;
 
     //Disable all panning
-    map.seriesContainer.draggable = false;
-    map.seriesContainer.resizable = false;
+     map.seriesContainer.draggable = false;
+     map.seriesContainer.resizable = false;
 
-    //Disable all zooming
-    map.maxZoomLevel = 1;
+     //Disable all zooming
+     map.maxZoomLevel = 1;
+     
     // Configure series
     var polygonTemplate = polygonSeries.mapPolygons.template;
     polygonTemplate.tooltipText = "{name}";
