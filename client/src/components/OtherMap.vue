@@ -39,6 +39,12 @@ export default {
     // Make map load polygon (like country names) data from GeoJSON
     polygonSeries.useGeodata = true;
 
+    //Disable all panning
+    map.seriesContainer.draggable = false;
+    map.seriesContainer.resizable = false;
+
+    //Disable all zooming
+    map.maxZoomLevel = 1;
     // Configure series
     var polygonTemplate = polygonSeries.mapPolygons.template;
     polygonTemplate.tooltipText = "{name}";
