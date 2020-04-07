@@ -1,7 +1,7 @@
 const express = require('express');
-const userRoute = require('./user');
-const articleRoute = require('./article');
-const commentRoute = require('./comment');
+const userRoute = require('./users');
+const articleRoute = require('./articles');
+const commentRoute = require('./comments');
 
 module.exports = config => {
   const router = express.Router();

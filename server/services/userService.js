@@ -3,15 +3,11 @@ const bcrypt = require('bcrypt');
 
 const SALT_WORK_FACTOR = 10;
 
-let client = null;
 let models = null;
 
 // Find all users
 async function getAll() {
   return models.RegisteredUsers.findAll();
-  //.then(users => {
-  //   console.log('All users:', JSON.stringify(users, null, 4));
-  // });
 }
 
 async function getOne(userId) {
@@ -65,77 +61,11 @@ async function createUser(username, email, country, password) {
   });
 }
 
-// // Append user history
-// async function addUserHistory(result, email) {
-//    var tempResult = result;
-//    // delete tempResult.description;
-//    // delete tempResult.content;
-//    // delete tempResult.urlToImage;
-//    // delete tempResult.publishedAt;
-//    // delete tempResult.updatedAt;
-//    // delete tempResult.source;
-//    // delete tempResult.author;
-//    // Note: using `force: true` will drop the table if it already exists
-//    var user = await models.RegisteredUsers.findOne({
-//       where: {
-//          email: email
-//       }
-//    });
-
-//    // If user does not exist
-//    if (user == null) {
-//       throw 'User does not exist!';
-//    }
-
-//    var tempUserHistory = user.history;
-
-//    models.RegisteredUsers.sync().then(() => {
-//       // Now the `users` table in the database corresponds to the model definition
-//       if (tempUserHistory == null) {
-//          models.RegisteredUsers.update({
-//             history: JSON.stringify(tempResult)
-//          }, { where: { id: user.id } });
-//       } else {
-//          tempUserHistory.push(JSON.stringify(tempResult));
-//          models.RegisteredUsers.update({
-//             history: tempUserHistory
-//          }, { where: { id: user.id } });
-//       }
-//    });
-// }
-
 async function createHistory(userId, articleId) {
-  models.UserArticleHistory.sync().then(() => {
     models.UserArticleHistory.create({
       RegisteredUserId: userId,
       ArticleId: articleId
     });
-  });
-}
-
-// Delete everyone named "Jane"
-async function deleteUser() {
-  models.RegisteredUsers.destroy({
-    where: {
-      firstName: 'Jane'
-    }
-  }).then(() => {
-    console.log('Done');
-  });
-}
-
-// Change everyone without a last name to "Doe"
-async function updateUser() {
-  models.RegisteredUsers.update(
-    { lastName: 'Doe' },
-    {
-      where: {
-        lastName: null
-      }
-    }
-  ).then(() => {
-    console.log('Done');
-  });
 }
 
 async function authenticate(email, plainTextPassword) {
@@ -210,12 +140,6 @@ async function getUserFavorites(userId) {
     }
   });
 }
-
-// async function getUserHistory() {
-//    models.RegisteredUsers.findAll().then(users => {
-//       console.log('All users:', JSON.stringify(users.favorites, null, 4));
-//    });
-// }
 
 async function getUserHistory(userId) {
   return models.UserArticleHistory.findAll({

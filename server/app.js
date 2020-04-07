@@ -10,19 +10,8 @@ module.exports = config => {
 
   // view engine setup
   app.set('views', path.join(__dirname, 'views'));
-  //app.set('view engine', 'pug');
 
   app.use(cors());
-
-  // app.use(function(req, res, next) {
-  //   res.header('Access-Control-Allow-Origin', '*');
-  //   res.header(
-  //     'Access-Control-Allow-Headers',
-  //     'Origin, X-Requested-With, content-type, Accept'
-  //   );
-  //   res.header('Access-Control-Allow-Methods', '*');
-  //   next();
-  // });
 
   app.use(
     session({
@@ -31,43 +20,9 @@ module.exports = config => {
       saveUninitialized: true
     })
   );
+
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(bodyParser.json());
-
-  // app.use(express.static(path.join(__dirname, '../client')));
-  // app.get('/favicon.ico', (req, res) => {
-  //   res.status(204);
-  // });
-  // app.get('/robots.txt', (req, res) => {
-  //   res.status(204);
-  // });
-
-  app.get('/', function(request, response) {
-    response.sendFile(path.join(__dirname + '/login.html'));
-  });
-
-  // // Define 'global' template variables here
-  // app.use(async (req, res, next) => {
-  //   // To show the application name on the page
-  //   res.locals.applicationName = config.applicationName;
-
-  //   // // Set up flash messaging
-  //   // if (!req.session.messages) {
-  //   //   req.session.messages = [];
-  //   // }
-  //   // res.locals.messages = req.session.messages;
-
-  //   try {
-  //     // if (req.session.userId) {
-  //     //await userService.createUser();
-  //     //res.locals.currentUser = await userService.getOne(); //req.session.userId);
-  //     // }
-  //   } catch (err) {
-  //     return next(err);
-  //   }
-
-  //   return next();
-  // });
 
   app.use('/', routeHandler(config));
 

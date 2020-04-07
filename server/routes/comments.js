@@ -1,5 +1,5 @@
 const express = require('express');
-const commentService = require('../../services/commentService');
+const commentService = require('../services/commentService');
 
 module.exports = config => {
   const router = express.Router();

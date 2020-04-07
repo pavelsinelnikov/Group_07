@@ -1,7 +1,8 @@
 const express = require('express');
-const articleService = require('../../services/articleService');
+const articleService = require('../services/articleService');
 
 module.exports = config => {
+  console.log(config);
   const router = express.Router();
   const log = config.logger;
   const article = articleService(config.mysql.client);
