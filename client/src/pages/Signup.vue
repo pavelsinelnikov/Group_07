@@ -101,7 +101,7 @@ export default {
       evt.preventDefault();
       axios({
         method: "post",
-        url: "http://localhost:3000/user/create",
+        url: "http://localhost:3000/users",
         data: {
           username: this.form.name,
           email: this.form.email,

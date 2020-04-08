@@ -65,10 +65,7 @@ export default {
     //Set user country
     axios({
       method: "get",
-      url: "http://localhost:3000/user/profile",
-      params: {
-        userId: this.$session.get("userId")
-      },
+      url: `http://localhost:3000/user/${this.$session.get("id")}/profile`,
       responseType: "json"
     })
       .then(res => {
@@ -77,13 +74,12 @@ export default {
             code: res.data.oneUser.country,
             name: res.data.oneUser.country
           });
-          //console.log(res.data.oneUser.country)
         }
       })
-      .catch
-      //this.localmsg = err;
-      ();
-
+      .catch(err => {
+        this.localmsg = err;
+      })
+      
     // Create active state
     var activeState = polygonTemplate.states.create("active");
     activeState.properties.fill = am4core.color("#d9534f");
@@ -103,9 +99,6 @@ export default {
     // Create hover state and set alternative fill color
     var hs = polygonTemplate.states.create("hover");
     hs.properties.fill = am4core.color("#367B25");
-  },
-  components: {
-    //WorldMap
   }
 };
 </script>

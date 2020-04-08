@@ -60,7 +60,7 @@ export default {
   mounted() {
     axios({
       method: 'get',
-      url: 'http://localhost:3000/article/popular',
+      url: 'http://localhost:3000/articles/popular',
       responseType: 'json'
     })
       .then(res => {
@@ -76,9 +76,9 @@ export default {
           this.localmsg = 'Error!';
         }
       })
-      .catch
-      //this.localmsg = err;
-      ();
+      .catch(err => {
+        this.localmsg = err;
+      })
   }
 };
 </script>

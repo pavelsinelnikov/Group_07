@@ -125,11 +125,11 @@ UserManager.findFavorite = async function (userId, articleId) {
 }
 
 UserManager.toggleFavorite = async function (userId, articleId) {
-  if (await findFavorite(userId, articleId)) {
-    removeFavorite(userId, articleId);
+  if (await UserManager.findFavorite(userId, articleId)) {
+    UserManager.removeFavorite(userId, articleId);
     return false;
   } else {
-    createFavorite(userId, articleId);
+    UserManager.createFavorite(userId, articleId);
     return true;
   }
 }

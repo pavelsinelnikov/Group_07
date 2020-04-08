@@ -101,12 +101,11 @@ export default {
   methods: {
     uploadImage(event) {
       let data = new FormData();
-      data.append('userId', this.$session.get('userId'));
       data.append('name', 'avatar');
       data.append('avatar', event.target.files[0]);
 
       axios.post(
-        'http://localhost:3000/user/upload',
+        `http://localhost:3000/users/${this.$session.get('id')}/upload`,
         data
       )
     }

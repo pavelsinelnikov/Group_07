@@ -4,9 +4,6 @@ const articleRoute = require('./articles');
 const commentRoute = require('./comments');
 
   const router = express.Router();
-  // router.get('/', (req, res) => {
-  //   res.render('index');
-  // });
 
   // Secure that route in real life applications
   router.use(userRoute);

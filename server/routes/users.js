@@ -1,7 +1,7 @@
 const express = require('express');
 const UserManager = require('../managers/user-manager');
 const ArticleManager = require('../managers/article-manager');
-const CommentManager = require('../managers/comment-manager');
+//const CommentManager = require('../managers/comment-manager');
 const multer = require('multer');
 
 var storage = multer.diskStorage(
@@ -18,14 +18,14 @@ const upload = multer({storage: storage});
   const router = express.Router();
 
   router.get('/users', async (req, res, next) => {
-    var usr = await UserManager.getAll();
+    var users = await UserManager.getAll();
 
-    res.send(usr);
+    res.send(users);
   });
 
   router.post('/users', async (req, res) => {
     try {
-      await user.createUser(
+      await UserManager.createUser(
         req.body.username,
         req.body.email,
         req.body.country,
@@ -37,10 +37,10 @@ const upload = multer({storage: storage});
     }
   });
 
-  router.post('/users/favorites', async (req, res) => {
+  router.post('/users/:id/favorites', async (req, res) => {
     try {
       var added = await UserManager.toggleFavorite(
-        req.body.userId,
+        req.params.id,
         req.body.articleId
       );
       res.send(added);
@@ -49,40 +49,24 @@ const upload = multer({storage: storage});
     }
   });
 
-  router.post('/users/history', async (req, res) => {
+  router.post('/users/:id/history', async (req, res) => {
     try {
-      await UserManager.createHistory(req.body.userId, req.body.articleId);
+      await UserManager.createHistory(req.params.id, req.body.articleId);
       res.send(true);
     } catch (err) {
       return res.send(err);
     }
   });
 
-  router.post('/users/checkFavorites', async (req, res) => {
+  router.get('/users/:id/favorites', async (req, res) => {
     try {
-      var fav = await UserManager.getUserFavorites(req.body.userId);
-      res.json(fav);
+      var favorites = await UserManager.getUserFavorites(req.params.id);
+      res.json(favorites);
     } catch (err) {
       console.log(err);
       return res.send(err);
     }
   });
-
-  // router.get('/:userId?', async (req, res, next) => {
-  //   try {
-  //     const users = await user.getAll();
-
-  //     // The optional userId param was passed
-  //     if (req.params.userId) {
-  //       var user = await user.getOne(req.params.userId);
-  //     }
-  //     return res.json({
-  //       users
-  //     });
-  //   } catch (err) {
-  //     return next(err);
-  //   }
-  // });
 
   router.get('/users/:id/profile/', async (req, res, next) => {
     try {
@@ -111,31 +95,16 @@ const upload = multer({storage: storage});
     }
   });
 
-  router.post('/users/upload', upload.single('avatar'), async (req, res, next) => {
+  router.post('/users/:id/upload', upload.single('avatar'), async (req, res, next) => {
     try {
-      await user.updateAvatar(req.body.userId, req.file.filename);
+      await UserManager.updateAvatar(req.params.id, req.file.filename);
     } catch (err) {
       return next(err);
     }
   });
-
-  router.get('/users/avatar/:id', async (req, res, next) => {
-    try {
-      var com = await CommentManager.getOne(req.params.id);
-      var account = await UserManager.getUser(com.dataValues.RegisteredUserId);
-      if (account.dataValues.avatar == null){
-        account.dataValues.avatar = 'user.png';
-      }
-      res.type('png').sendFile('uploads/images/'+account.dataValues.avatar , { root : './'});
-    } catch (err) {
-      return next(err);
-    }
-  });
-
-  
 
   router.get('/users/:id', async (req, res, next) => {
-    var com = await CommentManager.getOne(req.params.id);
+    // var com = await CommentManager.getOne(req.params.id);
     var usr = await UserManager.getOne(com.RegisteredUserId);
 
     res.send(usr);
@@ -155,104 +124,76 @@ const upload = multer({storage: storage});
       }
       res.end();
     } else {
-      // 'Please enter Username and Password!'
-      res.send(false);
-      res.end();
+      // // 'Please enter Username and Password!'
+      // res.send(false);
+      // res.end();
 
-      var userData = {};
-      if (username) {
-        userData.username = username;
-      }
+      // var userData = {};
+      // if (username) {
+      //   userData.username = username;
+      // }
 
-      if (email) {
-        userData.email = email;
-      }
-      if (country) {
-        userData.country = country;
-      }
-      if (password) {
-        userData.password = password;
-      }
-      await userService.updateUser(req.body.userId, userData);
+      // if (email) {
+      //   userData.email = email;
+      // }
+      // if (country) {
+      //   userData.country = country;
+      // }
+      // if (password) {
+      //   userData.password = password;
+      // }
+      // await userService.updateUser(req.body.userId, userData);
     }
+    res.send(false);
+  });
+
+  router.post('/users', async (req, res) => {
+    const email = req.body.email.trim();
+    const password = req.body.password.trim();
   });
 
   // Save or update user
-  router.post('/', async (req, res) => {
-    const email = req.body.email.trim();
-    const password = req.body.password.trim();
-    // Add this here because on update we might want to keep the password as it is
-    if (!email || (!password && !req.body.userId)) {
-      req.session.messages.push({
-        type: 'warning',
-        text: 'Please enter email address and password!'
-      });
-      return res.redirect('/admin/user');
-    }
-    try {
-      // If there was no existing user we now want to create a new user object
-      if (req.body.userId) {
-        var userData = {};
-        if (username) {
-          userData.username = username;
-        }
+  // router.put('/users/:id', async (req, res) => {
+  //   const email = req.body.email.trim();
+  //   const password = req.body.password.trim();
+  //   // Add this here because on update we might want to keep the password as it is
+  //   if (!email || (!password && !req.body.userId)) {
+  //     req.session.messages.push({
+  //       type: 'warning',
+  //       text: 'Please enter email address and password!'
+  //     });
+  //   }
+  //   try {
+  //     // If there was no existing user we now want to create a new user object
+  //     if (req.body.userId) {
+  //       var userData = {};
+  //       if (username) {
+  //         userData.username = username;
+  //       }
 
-        if (email) {
-          userData.email = email;
-        }
+  //       if (email) {
+  //         userData.email = email;
+  //       }
 
-        if (password) {
-          userData.password = password;
-        }
-        await UserManager.updateUser(req.body.userId, userData);
-      }
-      req.session.messages.push({
-        type: 'success',
-        text: 'The user was updated successfully!'
-      });
-      return res.send(true);
-    } catch (err) {
-      req.session.messages.push({
-        type: 'danger',
-        text: 'There was an error while saving the user!'
-      });
-      log.fatal(err);
-      return res.send(false);
-    }
-  });
-
-  // Delete user
-  router.get('/delete/:userId', async (req, res) => {
-    try {
-      const deleteResult = await UserManager.remove(req.params.userId);
-      if (deleteResult === 0) {
-        throw new Error('Result returned zero deleted documents!');
-      }
-    } catch (err) {
-      // Error handling
-      req.session.messages.push({
-        type: 'danger',
-        text: 'There was an error while deleting the user!'
-      });
-      log.fatal(err);
-      return res.redirect('/admin/user');
-    }
-    // Let the user knows that everything went fine
-    req.session.messages.push({
-      type: 'success',
-      text: 'The user was successfully deleted!'
-    });
-    return res.redirect('/admin/user');
-  });
-
-  router.get('/impersonate/:userId', (req, res) => {
-    req.session.userId = req.params.userId;
-    req.session.messages.push({
-      type: 'success',
-      text: 'User successfully switched'
-    });
-    return res.redirect('/admin/user');
-  });
+  //       if (password) {
+  //         userData.password = password;
+  //       }
+  //       await UserManager.updateUser(req.body.userId, userData);
+  //     }
+  //     req.session.messages.push({
+  //       type: 'success',
+  //       text: 'The user was updated successfully!'
+  //     });
+  //     return res.send(true);
+  //   } catch (err) {
+  //     req.session.messages.push({
+  //       type: 'danger',
+  //       text: 'There was an error while saving the user!'
+  //     });
+  //     log.fatal(err);
+  //     res.send(false);
+  //   }
+  // });
 
   module.exports = router;
 

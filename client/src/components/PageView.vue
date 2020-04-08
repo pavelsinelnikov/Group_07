@@ -20,38 +20,35 @@
         <ul v-for="comment in comments" :key="comment.id">
           <li v-if="userId === comment.RegisteredUserId">
             <div v-if="!editState">
-              <img class='avatar' :src="'http://localhost:3000/user/avatar/'+comment.id" />
+              <img class='avatar' :src="`http://localhost:3000/comments/${comment.id}/avatar/`" />
               <p>
                 {{ comment.RegisteredUser.username }} {{ comment.updatedAt }}
                 {{ comment.text }}
                 <button
                   @click="
                     toggleEditState();
-                    setCurrentComment(comment.id, comment.text);
-                  "
+                    setCurrentComment(comment.id, comment.text);"
                 >
                   edit
                 </button>
                 <button
                   @click="
                     setCurrentComment(comment.id, comment.text);
-                    deleteComment();
-                  "
+                    deleteComment();"
                 >
                   Delete
                 </button>
               </p>
             </div>
             <div v-else-if="editState && currentComment.id === comment.id">
-              <img class='avatar' :src="'http://localhost:3000/user/avatar/'+comment.id" />
+              <img class='avatar' :src="`http://localhost:3000/comments/${comment.id}/avatar/`" />
               <p>
                 {{ comment.RegisteredUser.username }} {{ comment.updatedAt }}
                 <input v-model="currentComment.text" />
                 <button
                   @click="
                     toggleEditState();
-                    editComment();
-                  "
+                    editComment();"
                 >
                   submit
                 </button>
@@ -67,23 +64,21 @@
             </div>
           </li>
           <li v-else>
-            <img class='avatar' :src="'http://localhost:3000/user/avatar/'+comment.id" />
+            <img class='avatar' :src="`http://localhost:3000/comments/${comment.id}/avatar/`" />
             {{ comment.RegisteredUser.username }} {{ comment.updatedAt }}
             {{ comment.text }}
           </li>
         </ul>
 
-        <div v-if="userId !== 0">
+        <div v-if="this.$session.exists() && articleId">
           <textarea v-model="text"></textarea>
           <button @click="addComment">Comment</button>
         </div>
       </div>
-      <p>{{ text }}</p>
     </div>
     <div v-else>
       <p>Loading...</p>
     </div>
-    <p>{{ text }}</p>
   </div>
 </template>
 
@@ -120,14 +115,14 @@ export default {
   },
   mounted() {
     if (this.$session.exists()) {
-      this.userId = this.$session.get('userId');
+      this.userId = this.$session.get('id');
     }
   },
   updated() {
     //window.console.log(this.$refs.articleFrame);
     axios({
       method: 'post',
-      url: 'http://localhost:3000/article/checkLink',
+      url: 'http://localhost:3000/articles/checkLink',
       data: {
         url: this.article.articleURL
       }
@@ -148,11 +143,9 @@ export default {
   methods: {
     addComment() {
       if (this.$session.exists()) {
-        let url =
-          'http://localhost:3000/article/' + this.articleId + '/comments';
         axios({
           method: 'POST',
-          url: url,
+          url: `http://localhost:3000/articles/${this.articleId}/comments`,
           data: {
             userId: this.userId,
             text: this.text
@@ -171,11 +164,9 @@ export default {
 
     editComment() {
       if (this.$session.exists()) {
-        let url =
-          'http://localhost:3000/comment/comments/' + this.currentComment.id;
         axios({
           method: 'PUT',
-          url: url,
+          url: `http://localhost:3000/comments/${this.currentComment.id}`,
           data: {
             userId: this.userId,
             text: this.currentComment.text
@@ -194,11 +185,9 @@ export default {
 
     deleteComment() {
       if (this.$session.exists()) {
-        let url =
-          'http://localhost:3000/comment/comments/' + this.currentComment.id;
         axios({
           method: 'DELETE',
-          url: url
+          url: `http://localhost:3000/comments/${this.currentComment.id}`
         })
           .then(res => {
             this.infomsg = res.data;
@@ -211,10 +200,9 @@ export default {
     },
 
     getComments() {
-      let url = 'http://localhost:3000/article/' + this.articleId + '/comments';
       axios({
         method: 'GET',
-        url: url
+        url: `http://localhost:3000/articles/${this.articleId}/comments`
       })
         .then(res => {
           this.comments = res.data;
@@ -229,8 +217,7 @@ export default {
 
       if (this.articleId != null) {
         this.loading = true;
-         let url = 'http://localhost:3000/article/articles/' + this.articleId;
-      axios.get(url)
+      axios.get(`http://localhost:3000/articles/${this.articleId}`)
         .then(res => {
           var text;
           var checkTitle = '';

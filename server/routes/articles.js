@@ -3,15 +3,6 @@ const ArticleManager = require('../managers/article-manager');
 
   const router = express.Router();
 
-  router.get('/articles/:id', async (req, res) => {
-    try {
-      let art = await ArticleManager.getArticle(req.params.id);
-      res.send(art);
-    } catch (err) {
-      return res.send(err);
-    }
-  });
-
   router.post('/articles', async (req, res) => {
     try {
       var ids = [];
@@ -19,6 +10,15 @@ const ArticleManager = require('../managers/article-manager');
         ids.push(await ArticleManager.createArticle(art.title, art.url));
       }
       res.send(ids);
+    } catch (err) {
+      return res.send(err);
+    }
+  });
+
+  router.get('/articles/:id', async (req, res) => {
+    try {
+      let art = await ArticleManager.getArticle(req.params.id);
+      res.send(art);
     } catch (err) {
       return res.send(err);
     }

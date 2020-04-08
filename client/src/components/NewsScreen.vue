@@ -49,7 +49,7 @@
           <b-card no-body class="overflow-hidden" style="max-width: 1000px;">
             <b-row no-gutters>
               <b-col md="6">
-                <b-card-img v-bind:src="response.image" class="rounded-0"></b-card-img>
+                <b-card-img v-if="response.image" v-bind:src="response.image" class="rounded-0"></b-card-img>
               </b-col>
               <b-col md="6">
                 <b-checkbox
@@ -179,11 +179,8 @@ export default {
     checkFavorites() {
       if (this.$session.exists()) {
         axios({
-          method: "post",
-          url: "http://localhost:3000/user/checkFavorites",
-          data: {
-            userId: this.$session.get("userId")
-          }
+          method: "GET",
+          url: `http://localhost:3000/users/${this.$session.get("id")}/favorites`,
         })
           .then(res => {
             this.favoriteCheck = res.data;
@@ -199,7 +196,7 @@ export default {
           if (
             entry &&
             entry.ArticleId === articleId &&
-            entry.RegisteredUserId === this.$session.get("userId")
+            entry.RegisteredUserId === this.$session.get("id")
           ) {
             return true;
           }
@@ -211,9 +208,8 @@ export default {
       if (this.$session.exists()) {
         axios({
           method: "post",
-          url: "http://localhost:3000/user/favorites",
+          url: `http://localhost:3000/users/${this.$session.get("id")}/favorites`,
           data: {
-            userId: this.$session.get("userId"),
             articleId: articleId
           }
         })
@@ -233,9 +229,8 @@ export default {
       if (this.$session.exists()) {
         axios({
           method: "POST",
-          url: "http://localhost:3000/user/history",
+          url: `http://localhost:3000/users/${this.$session.get("id")}/history`,
           data: {
-            userId: this.$session.get("userId"),
             articleId: articleId
           }
         })
@@ -250,21 +245,11 @@ export default {
             this.infomsg = err;
           });
       }
-
-      axios({
-        method: "POST",
-        url: "http://localhost:3000/article/viewArticle",
-        data: {
-          articleId: articleId
-        }
-      }).catch(err => {
-        this.infomsg = err;
-      });
     },
     addArticleData() {
       axios({
         method: "POST",
-        url: "http://localhost:3000/article/articles",
+        url: "http://localhost:3000/articles",
         data: {
           articles: this.newsResponse
         }
@@ -275,13 +260,6 @@ export default {
             this.newsResponse[i].id = res.data[i].id;
           }
           this.checkFavorites();
-          // if (res.data) {
-          //   this.infomsg = 'Articles successfully added!';
-
-          // } else {
-          //   this.infomsg = 'Articles could not be added!';
-          //   return null
-          // }
         })
         .catch(err => {
           this.infomsg = err;
@@ -306,11 +284,6 @@ export default {
   text-align: left;
 }
 #desc {
-  /* overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3; 
-    -webkit-box-orient: vertical; */
   font-weight: 100;
   font-size: 0.65em;
 }
