@@ -1,14 +1,11 @@
 const express = require('express');
-const commentService = require('../services/commentService');
+const CommentManager = require('../managers/comment-manager');
 
-module.exports = config => {
   const router = express.Router();
-  const log = config.logger;
-  const comment = commentService(config.mysql.client);
 
   router.put('/comments/:id', async (req, res) => {
     try {
-      let com = await comment.editComment(req.params.id, req.body.text);
+      let com = await CommentManager.editComment(req.params.id, req.body.text);
 
       res.send(com);
     } catch (err) {
@@ -18,7 +15,7 @@ module.exports = config => {
 
   router.delete('/comments/:id', async (req, res) => {
     try {
-      let com = await comment.deleteComment(req.params.id);
+      let com = await CommentManager.deleteComment(req.params.id);
 
       if (com > 0) res.send('success');
     } catch (err) {
@@ -26,5 +23,4 @@ module.exports = config => {
     }
   });
 
-  return router;
-};
+  module.exports = router;

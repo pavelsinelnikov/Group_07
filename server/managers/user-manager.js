@@ -1,16 +1,17 @@
-const Models = require('../models');
+const models = require('../models');
 const bcrypt = require('bcrypt');
 
 const SALT_WORK_FACTOR = 10;
 
-let models = null;
+// Module Object
+const UserManager = function () { };
 
 // Find all users
-async function getAll() {
+UserManager.getAll = async function () {
   return models.RegisteredUsers.findAll();
 }
 
-async function getOne(userId) {
+UserManager.getOne = async function (userId) {
   return models.RegisteredUsers.findOne({
     where: {
       id: userId
@@ -18,7 +19,7 @@ async function getOne(userId) {
   });
 }
 
-async function getOneByEmail(email) {
+UserManager.getOneByEmail = async function (email) {
   return models.RegisteredUsers.findOne({
     where: {
       email: email
@@ -27,7 +28,7 @@ async function getOneByEmail(email) {
 }
 
 // Create a new user
-async function createUser(username, email, country, password) {
+UserManager.createUser = async function (username, email, country, password) {
   // Note: using `force: true` will drop the table if it already exists
   let count = await models.RegisteredUsers.count({
     where: {
@@ -61,14 +62,14 @@ async function createUser(username, email, country, password) {
   });
 }
 
-async function createHistory(userId, articleId) {
+UserManager.createHistory = async function (userId, articleId) {
     models.UserArticleHistory.create({
       RegisteredUserId: userId,
       ArticleId: articleId
     });
 }
 
-async function authenticate(email, plainTextPassword) {
+UserManager.authenticate = async function (email, plainTextPassword) {
   let user = await models.RegisteredUsers.findOne({
     where: {
       email: email
@@ -77,7 +78,7 @@ async function authenticate(email, plainTextPassword) {
 
   if (user) {
     if (await bcrypt.compare(plainTextPassword, user.password)) {
-      return user.id;
+      return user;
     }
   } else {
     return null;
@@ -86,7 +87,7 @@ async function authenticate(email, plainTextPassword) {
   return null;
 }
 
-async function getUser(userId) {
+UserManager.getUser = async function (userId) {
   return models.RegisteredUsers.findOne({
     where: {
       id: userId
@@ -94,7 +95,7 @@ async function getUser(userId) {
   });
 }
 
-async function createFavorite(userId, articleId) {
+UserManager.createFavorite = async function (userId, articleId) {
   models.UserArticleFavorites.sync().then(() => {
     models.UserArticleFavorites.create({
       RegisteredUserId: userId,
@@ -103,7 +104,7 @@ async function createFavorite(userId, articleId) {
   });
 }
 
-async function removeFavorite(userId, articleId) {
+UserManager.removeFavorite = async function (userId, articleId) {
   models.UserArticleFavorites.sync().then(() => {
     models.UserArticleFavorites.destroy({
       where: {
@@ -114,7 +115,7 @@ async function removeFavorite(userId, articleId) {
   });
 }
 
-async function findFavorite(userId, articleId) {
+UserManager.findFavorite = async function (userId, articleId) {
   return models.UserArticleFavorites.findOne({
     where: {
       RegisteredUserId: userId,
@@ -123,7 +124,7 @@ async function findFavorite(userId, articleId) {
   });
 }
 
-async function toggleFavorite(userId, articleId) {
+UserManager.toggleFavorite = async function (userId, articleId) {
   if (await findFavorite(userId, articleId)) {
     removeFavorite(userId, articleId);
     return false;
@@ -133,7 +134,7 @@ async function toggleFavorite(userId, articleId) {
   }
 }
 
-async function getUserFavorites(userId) {
+UserManager.getUserFavorites = async function (userId) {
   return models.UserArticleFavorites.findAll({
     where: {
       RegisteredUserId: userId
@@ -141,7 +142,7 @@ async function getUserFavorites(userId) {
   });
 }
 
-async function getUserHistory(userId) {
+UserManager.getUserHistory = async function (userId) {
   return models.UserArticleHistory.findAll({
     where: {
       RegisteredUserId: userId
@@ -149,7 +150,7 @@ async function getUserHistory(userId) {
   });
 }
 
-async function updateAvatar(id, file) {
+UserManager.updateAvatar = async function (id, file) {
   models.RegisteredUsers.update(
     { avatar: file },
     {
@@ -162,25 +163,4 @@ async function updateAvatar(id, file) {
   });
 }
 
-module.exports = _client => {
-  models = Models(_client);
-  client = _client;
-
-  return {
-    getAll,
-    getOne,
-    getOneByEmail,
-    createUser,
-    deleteUser,
-    updateUser,
-    authenticate,
-    createHistory,
-    createFavorite,
-    findFavorite,
-    toggleFavorite,
-    getUserFavorites,
-    getUserHistory,
-    getUser,
-    updateAvatar
-  };
-};
+module.exports = UserManager;

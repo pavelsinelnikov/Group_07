@@ -63,7 +63,7 @@ export default {
       evt.preventDefault();
       axios({
         method: 'post',
-        url: 'http://localhost:3000/user/auth',
+        url: 'http://localhost:3000/users/auth',
         data: {
           email: this.form.email,
           password: this.form.password
@@ -72,7 +72,8 @@ export default {
         .then(res => {
           if (res.data) {
             this.$session.start();
-            this.$session.set('userId', res.data);
+            this.$session.set('id', res.data.id);
+            this.$session.set('email', res.data.email);
             this.$router.push('/');
             this.$router.go();
           } else {

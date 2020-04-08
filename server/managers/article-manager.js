@@ -1,10 +1,9 @@
-const Models = require('../models');
+const models = require('../models/index.js');
 
-var sequelize = require('sequelize');
+// Module Object
+const ArticleManager = function () { };
 
-let models = null;
-
-async function createArticle(articleTitle, articleURL) {
+ArticleManager.createArticle = async function (articleTitle, articleURL) {
   let count = await models.Articles.count({
     where: {
       articleURL: articleURL
@@ -27,7 +26,7 @@ async function createArticle(articleTitle, articleURL) {
   });
 }
 
-async function getArticle(articleId) {
+ArticleManager.getArticle = async function (articleId) {
   return models.Articles.findOne({
     where: {
       id: articleId
@@ -35,7 +34,7 @@ async function getArticle(articleId) {
   });
 }
 
-async function incViews(articleId) {
+ArticleManager.incViews = async function (articleId) {
   let views = (await getArticle(articleId)).dataValues.articleViews;
   models.Articles.update(
     { articleViews: views + 1 },
@@ -49,14 +48,14 @@ async function incViews(articleId) {
   });
 }
 
-async function getHighestViewed() {
+ArticleManager.getHighestViewed = async function () {
   return models.Articles.findAll({
     limit: 15,
     order: [['articleViews', 'DESC']]
   });
 }
 
-async function getMostFavorited() {
+ArticleManager.getMostFavorited = async function () {
   return models.UserArticleFavorites.findAll({
     group: ['ArticleId'],
     attributes: [
@@ -66,7 +65,7 @@ async function getMostFavorited() {
   });
 }
 
-async function getComments(articleId) {
+ArticleManager.getComments = async function (articleId) {
   return models.Comments.findAll({
     where: {
       ArticleId: articleId
@@ -80,7 +79,7 @@ async function getComments(articleId) {
   });
 }
 
-async function addComment(articleId, userId, text) {
+ArticleManager.addComment = async function (articleId, userId, text) {
   return await models.Comments.create({
     ArticleId: articleId,
     RegisteredUserId: userId,
@@ -88,34 +87,4 @@ async function addComment(articleId, userId, text) {
   });
 }
 
-// async function createArticleHistory(articleId, userId) {
-//    models.UserArticleHistory.create({
-//       articleTitle: articleTitle,
-//       articleURL: articleURL
-//    });
-// }
-
-// async function createArticleFavorite(articleId, userId) {
-//    models.UserArticleFavorite.create({
-//       articleId: articleId,
-//       userId: userId
-//    });
-
-// }
-
-module.exports = _client => {
-  models = Models(_client);
-  client = _client;
-
-  return {
-    createArticle,
-    getArticle,
-    incViews,
-    getHighestViewed,
-    getMostFavorited,
-    getComments,
-    addComment
-    //createArticleHistory,
-    //createArticleFavorite
-  };
-};
+module.exports = ArticleManager;

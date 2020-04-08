@@ -1,15 +1,11 @@
 const express = require('express');
-const articleService = require('../services/articleService');
+const ArticleManager = require('../managers/article-manager');
 
-module.exports = config => {
-  console.log(config);
   const router = express.Router();
-  const log = config.logger;
-  const article = articleService(config.mysql.client);
 
   router.get('/articles/:id', async (req, res) => {
     try {
-      let art = await article.getArticle(req.params.id);
+      let art = await ArticleManager.getArticle(req.params.id);
       res.send(art);
     } catch (err) {
       return res.send(err);
@@ -20,7 +16,7 @@ module.exports = config => {
     try {
       var ids = [];
       for (let art of req.body.articles) {
-        ids.push(await article.createArticle(art.title, art.url));
+        ids.push(await ArticleManager.createArticle(art.title, art.url));
       }
       res.send(ids);
     } catch (err) {
@@ -28,9 +24,9 @@ module.exports = config => {
     }
   });
 
-  router.post('/viewArticle', async (req, res) => {
+  router.post('/articles/viewArticle', async (req, res) => {
     try {
-      await article.incViews(req.body.articleId);
+      await ArticleManager.incViews(req.body.articleId);
       res.send(true);
     } catch (err) {
       console.log(err);
@@ -38,7 +34,7 @@ module.exports = config => {
     }
   });
 
-  router.post('/checkLink', async (req, res) => {
+  router.post('/articles/checkLink', async (req, res) => {
      var request = require('request');
 
      request(req.body.url, function(err, response) {
@@ -69,16 +65,12 @@ module.exports = config => {
 
   });
 
-  router.get('/popular', async (req, res, next) => {
+  router.get('/articles/popular', async (req, res, next) => {
     try {
       var favorites = [];
       var favCount = await article.getMostFavorited();
       var viewed = await article.getHighestViewed();
-      //var userFavorites = await user.getUserFavorites(req.query.userId);
-
-      /*for (const hist of userHistory) {
-             viewed.push(await article.getArticle(hist.ArticleId));
-          }*/
+  
       favCount.sort(function(a, b) {
         return b.dataValues.numFavs - a.dataValues.numFavs;
       });
@@ -96,18 +88,18 @@ module.exports = config => {
     }
   });
 
-  router.get('/:id/comments', async (req, res) => {
+  router.get('/articles/:id/comments', async (req, res) => {
     try {
-      let com = await article.getComments(req.params.id);
+      let com = await ArticleManager.getComments(req.params.id);
       res.send(com);
     } catch (err) {
       return res.send(err);
     }
   });
 
-  router.post('/:id/comments', async (req, res) => {
+  router.post('/articles/:id/comments', async (req, res) => {
     try {
-      let com = await article.addComment(
+      let com = await ArticleManager.addComment(
         req.params.id,
         req.body.userId,
         req.body.text
@@ -119,5 +111,4 @@ module.exports = config => {
     }
   });
 
-  return router;
-};
+  module.exports = router;

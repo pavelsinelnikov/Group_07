@@ -56,7 +56,7 @@ export default {
   },
   beforeCreate: function() {
     if (this.$session.exists()) {
-      this.user = this.$session.get('userId');
+      this.user = this.$session.get('email');
     } else {
       this.user = 'log in';
     }

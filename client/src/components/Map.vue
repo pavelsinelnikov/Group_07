@@ -29,16 +29,13 @@ export default {
       geocoder: null
     };
   },
-  computed: {
-    google: gmapApi
-  },
+  // computed: {
+  //   google: gmapApi
+  // },
   mounted() {
     axios({
       method: "get",
-      url: "http://localhost:3000/user/profile",
-      params: {
-        email: this.$session.get("email")
-      },
+      url: `http://localhost:3000/users/${this.$session.get("id")}`,
       responseType: "json"
     })
       .then(res => {

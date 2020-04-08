@@ -1,16 +1,29 @@
 const express = require('express');
-const userService = require('../services/userService');
-const articleService = require('../services/articleService');
-const commentService = require('../services/commentService');
+const UserManager = require('../managers/user-manager');
+const ArticleManager = require('../managers/article-manager');
+const CommentManager = require('../managers/comment-manager');
+const multer = require('multer');
 
-module.exports = config => {
+var storage = multer.diskStorage(
+    {
+        destination: './uploads/images',
+        filename: function ( req, file, cb ) {
+            cb( null, file.originalname);
+        }
+    }
+);
+
+const upload = multer({storage: storage});
+
   const router = express.Router();
-  const log = config.logger;
-  const user = userService(config.mysql.client);
-  const comment = commentService(config.mysql.client);
-  const article = articleService(config.mysql.client);
 
-  router.post('/create', async (req, res) => {
+  router.get('/users', async (req, res, next) => {
+    var usr = await UserManager.getAll();
+
+    res.send(usr);
+  });
+
+  router.post('/users', async (req, res) => {
     try {
       await user.createUser(
         req.body.username,
@@ -24,9 +37,9 @@ module.exports = config => {
     }
   });
 
-  router.post('/favorites', async (req, res) => {
+  router.post('/users/favorites', async (req, res) => {
     try {
-      var added = await user.toggleFavorite(
+      var added = await UserManager.toggleFavorite(
         req.body.userId,
         req.body.articleId
       );
@@ -36,18 +49,18 @@ module.exports = config => {
     }
   });
 
-  router.post('/history', async (req, res) => {
+  router.post('/users/history', async (req, res) => {
     try {
-      await user.createHistory(req.body.userId, req.body.articleId);
+      await UserManager.createHistory(req.body.userId, req.body.articleId);
       res.send(true);
     } catch (err) {
       return res.send(err);
     }
   });
 
-  router.post('/checkFavorites', async (req, res) => {
+  router.post('/users/checkFavorites', async (req, res) => {
     try {
-      var fav = await user.getUserFavorites(req.body.userId);
+      var fav = await UserManager.getUserFavorites(req.body.userId);
       res.json(fav);
     } catch (err) {
       console.log(err);
@@ -71,25 +84,25 @@ module.exports = config => {
   //   }
   // });
 
-  router.get('/profile', async (req, res, next) => {
+  router.get('/users/:id/profile/', async (req, res, next) => {
     try {
       var favorites = [];
       var history = [];
-      var oneUser = await user.getUser(req.query.userId);
-      var userHistory = await user.getUserHistory(req.query.userId);
+      var user = await UserManager.getUser(req.params.id);
+      var userHistory = await UserManager.getUserHistory(req.params.id);
 
-      var userFavorites = await user.getUserFavorites(req.query.userId);
+      var userFavorites = await UserManager.getUserFavorites(req.params.id);
 
       for (const hist of userHistory) {
-        history.push(await article.getArticle(hist.ArticleId));
+        history.push(await ArticleManager.getArticle(hist.ArticleId));
       }
 
       for (const fav of userFavorites) {
-        favorites.push(await article.getArticle(fav.ArticleId));
+        favorites.push(await ArticleManager.getArticle(fav.ArticleId));
       }
 
       return res.json({
-        oneUser,
+        user,
         history,
         favorites
       });
@@ -98,33 +111,44 @@ module.exports = config => {
     }
   });
 
-  router.get('/all', async (req, res, next) => {
+  router.post('/users/upload', upload.single('avatar'), async (req, res, next) => {
     try {
-      var allUsers = await user.getAll();
-
-      return res.json({
-        allUsers
-      });
+      await user.updateAvatar(req.body.userId, req.file.filename);
     } catch (err) {
       return next(err);
     }
   });
 
+  router.get('/users/avatar/:id', async (req, res, next) => {
+    try {
+      var com = await CommentManager.getOne(req.params.id);
+      var account = await UserManager.getUser(com.dataValues.RegisteredUserId);
+      if (account.dataValues.avatar == null){
+        account.dataValues.avatar = 'user.png';
+      }
+      res.type('png').sendFile('uploads/images/'+account.dataValues.avatar , { root : './'});
+    } catch (err) {
+      return next(err);
+    }
+  });
+
+  
+
   router.get('/users/:id', async (req, res, next) => {
-    var com = await comment.getOne(req.params.id);
-    var usr = await user.getOne(com.RegisteredUserId);
+    var com = await CommentManager.getOne(req.params.id);
+    var usr = await UserManager.getOne(com.RegisteredUserId);
 
     res.send(usr);
   });
 
-  router.post('/auth', async (req, res) => {
+  router.post('/users/auth', async (req, res) => {
     var username = req.body.email;
     var password = req.body.password;
     if (username && password) {
-      var userId = await user.authenticate(username, password);
+      var user = await UserManager.authenticate(username, password);
 
-      if (userId) {
-        res.status(200).send(userId.toString());
+      if (user) {
+        res.send(user);
       } else {
         // 'Incorrect Username and/or Password!'
         res.send(false);
@@ -155,7 +179,6 @@ module.exports = config => {
 
   // Save or update user
   router.post('/', async (req, res) => {
-    const user = req.body.username.trim();
     const email = req.body.email.trim();
     const password = req.body.password.trim();
     // Add this here because on update we might want to keep the password as it is
@@ -181,7 +204,7 @@ module.exports = config => {
         if (password) {
           userData.password = password;
         }
-        await userService.updateUser(req.body.userId, userData);
+        await UserManager.updateUser(req.body.userId, userData);
       }
       req.session.messages.push({
         type: 'success',
@@ -201,7 +224,7 @@ module.exports = config => {
   // Delete user
   router.get('/delete/:userId', async (req, res) => {
     try {
-      const deleteResult = await userService.remove(req.params.userId);
+      const deleteResult = await UserManager.remove(req.params.userId);
       if (deleteResult === 0) {
         throw new Error('Result returned zero deleted documents!');
       }
@@ -231,5 +254,5 @@ module.exports = config => {
     return res.redirect('/admin/user');
   });
 
-  return router;
-};
+  module.exports = router;
+

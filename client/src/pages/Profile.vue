@@ -73,17 +73,14 @@ export default {
   mounted() {
     axios({
       method: 'get',
-      url: 'http://localhost:3000/user/profile',
-      params: {
-        userId: this.$session.get('userId')
-      },
+      url: `http://localhost:3000/users/${this.$session.get('id')}/profile`,
       responseType: 'json'
     })
       .then(res => {
         if (res.data) {
-          this.username = res.data.oneUser.username;
-          this.email = res.data.oneUser.email;
-          this.country = res.data.oneUser.country;
+          this.username = res.data.user.username;
+          this.email = res.data.user.email;
+          this.country = res.data.user.country;
           for (let hist of res.data.history) {
             if (hist != null)
             this.history.push(hist);
